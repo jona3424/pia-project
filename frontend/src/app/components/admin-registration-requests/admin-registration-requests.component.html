@@ -1,0 +1,52 @@
+<!-- admin-registration-requests.component.html -->
+<div class="container">
+    <h2>Registration Requests</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of registrationRequests">
+          <td>{{ request.username }}</td>
+          <td>{{ request.email }}</td>
+          <td>
+            <button class="btn btn-success" (click)="approveRequest(request.userId)">Approve</button>
+            <button class="btn btn-danger" (click)="rejectRequest(request.userId)">Reject</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="registrationRequests.length === 0">
+      <p>No registration requests found.</p>
+    </div>  
+
+    <hr>
+    <h2>Manage useres</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of existingUsers">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="blockUser(user.userId)">BlockUser</button>
+            <button class="btn btn-warning me-2" [ngClass]="{'active': activeButton === 'Update user info'}" (click)="selectComponent('update-user',user.userId)">Update user info</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <router-outlet></router-outlet>
+  </div>
+  

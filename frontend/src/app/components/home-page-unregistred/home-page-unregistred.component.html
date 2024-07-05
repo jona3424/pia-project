@@ -1,0 +1,102 @@
+<!-- home-unregistered.component.html -->
+
+<header class="d-flex justify-content-between align-items-center">
+    <div class="container">
+        <div class="row g-3">
+
+        <div class="website-logo col-md-10" >
+            <a routerLink=""><img src="../../../assets/logo.png" alt="Website Logo"></a>
+            <h1 class="h2 mb-0" style="font-family: MilestoneBrush;margin-top: 20px;">Kutak dobre hrane</h1>
+        </div>
+        <div class="col-md-1">
+            <a href="/login" class="btn btn-light" style="margin: 10px;">Login</a>
+            <a href="/register" class="btn btn-light" style="margin: 10px;">Register</a>
+        </div>
+    </div>
+    </div>
+</header>
+
+<div class="container">
+    <h2>Welcome to Our Restaurant System</h2>
+    
+    <div class="stats">
+      <p>Total Restaurants: {{totalRestaurants}}</p>
+      <p>Total Registered Guests: {{totalGuests}}</p>
+      <p>Reservations in Last 24 Hours: {{reservationsLast24Hours}}</p>
+      <p>Reservations in Last 7 Days: {{reservationsLast7Days}}</p>
+      <p>Reservations in Last 30 Days: {{reservationsLast30Days}}</p>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Search by Name" [(ngModel)]="searchName">
+        </div>
+        <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Search by Address" [(ngModel)]="searchAddress">
+        </div>
+        <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Search by Type" [(ngModel)]="searchType">
+        </div>
+    </div>
+    <div class="row" style="margin-top: 2%;">
+        <div class="col-md-1">
+            <button class="btn btn-primary" (click)="search()">Search</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary" (click)="reset()">Reset filter</button>
+        </div>
+        <div class="col-md-6">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="form-select form-select-lg" id="sortField" [(ngModel)]="sortType">
+                            <option value="" disabled selected>Select Sort Field</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="form-select form-select-lg" id="sortField" [(ngModel)]="sortField">
+                            <option value="" disabled selected>Select Sort Field</option>
+                            <option value="name">Name</option>
+                            <option value="address">Address</option>
+                            <option value="type">Type</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary" (click)="sort()">Sort</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <br>
+    <div class="overflow-auto">
+        <div class="restaurant-list">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th >Address</th>
+                <th >Type</th>
+                <th>Waiters</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let restaurant of showingRestaurants">
+                <td>{{restaurant.restaurantName}}</td>
+                <td>{{restaurant.restaurantAddress}}</td>
+                <td>{{restaurant.typeOfRestaurant}}</td>
+                <td>
+                <ul>
+                    <li class="list-unstyled" *ngFor="let waiter of restaurant.workerNames">{{waiter}}</li>
+                </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+  </div>

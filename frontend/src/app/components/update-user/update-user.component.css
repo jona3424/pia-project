@@ -1,0 +1,50 @@
+/* register.component.css */
+.container {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary {
+    margin-top: 10px;
+  }
+  
+  .text-danger {
+    font-size: 0.875em;
+  }
+  header {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .stats {
+    margin: 2rem 0;
+  }
+  .restaurant-list {
+    margin-top: 2rem;
+  }
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .website-logo {
+    display: flex;
+    align-items: center;
+  }
+  .website-logo img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    border-radius: 50%;
+  
+  }
+  @font-face {
+    font-family: "MilestoneBrush";
+    src: local("MilestoneBrush"), url(../../../assets/MilestoneBrush.ttf) format("truetype");
+  }
+  

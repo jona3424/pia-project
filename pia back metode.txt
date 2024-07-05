@@ -1,0 +1,109 @@
+1. Autentifikacija i Autorizacija
+Registracija korisnika
+
+POST /register
+Validacija unosa podataka
+Generisanje i čuvanje hashed lozinke
+Slanje zahteva za odobrenje administratoru
+Login
+
+POST /login
+Provera kredencijala
+Generisanje JWT tokena za autentifikaciju
+Logout
+
+POST /logout
+Invalidate JWT token
+Promena lozinke
+
+POST /change-password
+Provera stare lozinke
+Validacija i čuvanje nove lozinke
+Zaboravljena lozinka
+
+POST /forgot-password
+Slanje sigurnosnog pitanja
+Provera odgovora i postavljanje nove lozinke
+2. Upravljanje korisnicima
+Odobravanje registracija
+
+GET /admin/registration-requests
+POST /admin/registration-requests/:id/approve
+POST /admin/registration-requests/:id/reject
+Kreiranje konobara
+
+POST /admin/waiters
+Dodavanje konobara u specifičan restoran
+Ažuriranje profila
+
+PUT /profile
+Ažuriranje korisničkih podataka (ime, prezime, adresa, telefon, profilna slika itd.)
+3. Upravljanje restoranima
+Dodavanje/restoran
+
+POST /admin/restaurants
+Unos podataka o restoranu, crtanje rasporeda stolova
+Prikaz restorana
+
+GET /restaurants
+Prikaz informacija o restoranima, pretraga i sortiranje
+Prikaz detalja restorana
+
+GET /restaurants/:id
+Prikaz detaljnih informacija o restoranu, komentara, mapa itd.
+4. Rezervacije
+Kreiranje rezervacije
+
+POST /reservations
+Forma za unos rezervacije ili interaktivni panel za izbor stola
+Potvrda/odbijanje rezervacije (konobar)
+
+POST /waiter/reservations/:id/confirm
+POST /waiter/reservations/:id/reject
+Otkazivanje rezervacije
+
+DELETE /reservations/:id
+Otkazivanje rezervacije od strane korisnika
+Arhiva rezervacija
+
+GET /reservations
+Prikaz aktivnih i istaklih rezervacija korisnika
+5. Naručivanje hrane
+Pregled jela
+
+GET /menu
+Prikaz menija restorana
+Dodavanje u korpu
+
+POST /cart
+Dodavanje jela u korpu
+Pregled korpe
+
+GET /cart
+Pregled trenutnog stanja korpe
+Završetak porudžbine
+
+POST /order
+Kreiranje narudžbine i slanje restoranu
+6. Dostava hrane
+Potvrda/odbijanje narudžbine (konobar)
+
+POST /waiter/orders/:id/confirm
+POST /waiter/orders/:id/reject
+Prikaz dostava
+
+GET /deliveries
+Prikaz trenutnih i prethodnih dostava
+7. Statistika (konobar)
+Prikaz statistike
+GET /waiter/statistics
+Prikaz broja gostiju, raspodela među konobarima, histogram rezervacija
+8. Administracija
+Ažuriranje korisnika
+
+PUT /admin/users/:id
+Ažuriranje ili deaktivacija korisnika
+Ažuriranje restorana
+
+PUT /admin/restaurants/:id
+Ažuriranje podataka o restoranima

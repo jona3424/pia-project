@@ -1,0 +1,17 @@
+<div *ngFor="let b of allBooks">
+  {{b.name}} <button (click)="deleteBook(b)">Delete</button>
+  <button (click)="addToFavs(b)">Add to fav</button>
+</div> {{message}}
+<hr/>
+<select [(ngModel)]="name">
+  <option *ngFor="let b of allBooks"
+  value="{{b.name}}">{{b.name}}</option>
+</select>
+<input type="text" [(ngModel)]="pages">
+<button (click)="updateBook()">Update</button>
+<hr/>
+<b>My favourites</b>
+<div *ngFor="let fav of loggedUser.favourites">
+  {{fav.name}} - {{fav.date | date}}
+   <button (click)="deleteFav(fav.name)">Delete</button>
+</div>
