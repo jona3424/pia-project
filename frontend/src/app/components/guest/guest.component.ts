@@ -35,15 +35,6 @@ export class GuestComponent {
       this.router.navigate([`/gost/${component}`,{ data: userId ,return: `/gost/${this.activeButton}`,isAdmin:'false'}]);
     }
   }
-  selectComponent2(component: string): void {
-    // if (this.activeButton === component) {
-    //   this.activeButton = '';
-    //   this.router.navigate(['/admin/registration-requests']);
-    // } else {
-    //   this.activeButton = component;
-    //   this.router.navigate([`admin/registration-requests/${component}`,{ return: '/admin/registration-requests'}]);
-    // }
-  }
 
 
   logout(): void {

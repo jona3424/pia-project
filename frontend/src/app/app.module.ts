@@ -16,7 +16,8 @@ import { HomePageUnregistredComponent } from './components/home-page-unregistred
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { GuestComponent } from './components/guest/guest.component';
-
+import { RestauranGuestComponent } from './components/restauran-guest/restauran-guest.component';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,13 +31,15 @@ import { GuestComponent } from './components/guest/guest.component';
     HomePageUnregistredComponent,
     AdminLoginComponent,
     UpdateUserComponent,
-    GuestComponent
+    GuestComponent,
+    RestauranGuestComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule 
     ],
   providers: [],
   bootstrap: [AppComponent]

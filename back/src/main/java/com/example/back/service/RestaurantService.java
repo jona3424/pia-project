@@ -49,6 +49,7 @@ public class RestaurantService {
         List<RestaurantsWithWorkers> restaurantsWithWorkersList = new ArrayList<>();
         restaurantRepository.findAll().forEach(restaurant -> {
             RestaurantsWithWorkers restaurantsWithWorkers= new RestaurantsWithWorkers();
+            restaurantsWithWorkers.setRestaurantId(restaurant.getRestaurantId());
             restaurantsWithWorkers.setRestaurantAddress(restaurant.getAddress());
             restaurantsWithWorkers.setRestaurantName(restaurant.getName());
             restaurantsWithWorkers.setTypeOfRestaurant(restaurant.getType());

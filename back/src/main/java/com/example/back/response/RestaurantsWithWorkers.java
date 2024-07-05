@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class RestaurantsWithWorkers {
+    private Integer restaurantId;
     private String restaurantName;
     private String typeOfRestaurant;
     private String restaurantAddress;

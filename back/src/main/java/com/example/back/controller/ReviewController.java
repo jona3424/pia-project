@@ -53,5 +53,10 @@ public class ReviewController {
         reviewService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/average-rating/{restaurantId}")
+    public ResponseEntity<?> getAverageRating(@PathVariable Integer restaurantId) {
+        return ResponseEntity.ok(reviewService.getAverageRating(restaurantId));
+    }
 }
 

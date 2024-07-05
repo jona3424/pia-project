@@ -11,6 +11,7 @@ import { HomePageUnregistredComponent } from './components/home-page-unregistred
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { GuestComponent } from './components/guest/guest.component';
+import { RestauranGuestComponent } from './components/restauran-guest/restauran-guest.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -30,7 +31,8 @@ const routes: Routes = [
   {path: 'change-password', component: ChangePasswordComponent},
   {path: 'gost', component: GuestComponent,
   children:[
-    {path: 'update-user', component:UpdateUserComponent}
+    {path: 'update-user', component:UpdateUserComponent},
+    {path: 'restaurant-guest', component:RestauranGuestComponent}
   ]
   },
   {path: '', component: HomePageUnregistredComponent}
