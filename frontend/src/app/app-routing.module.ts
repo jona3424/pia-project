@@ -10,6 +10,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { HomePageUnregistredComponent } from './components/home-page-unregistred/home-page-unregistred.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { GuestComponent } from './components/guest/guest.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -27,6 +28,11 @@ const routes: Routes = [
   },
   {path: 'register', component: RegisterComponent},
   {path: 'change-password', component: ChangePasswordComponent},
+  {path: 'gost', component: GuestComponent,
+  children:[
+    {path: 'update-user', component:UpdateUserComponent}
+  ]
+  },
   {path: '', component: HomePageUnregistredComponent}
 
 ];

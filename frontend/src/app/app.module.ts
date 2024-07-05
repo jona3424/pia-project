@@ -15,6 +15,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { HomePageUnregistredComponent } from './components/home-page-unregistred/home-page-unregistred.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { GuestComponent } from './components/guest/guest.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     ChangePasswordComponent,
     HomePageUnregistredComponent,
     AdminLoginComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    GuestComponent
   ],
   imports: [
     BrowserModule,

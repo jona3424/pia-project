@@ -60,7 +60,7 @@ export class AdminRegistrationRequestsComponent {
       this.router.navigate(['/admin/registration-requests']);
     } else {
       this.activeButton = component;
-      this.router.navigate([`admin/registration-requests/${component}`,{ data: userId }]);
+      this.router.navigate([`admin/registration-requests/${component}`,{ data: userId ,return: '/admin/registration-requests',isAdmin:true}]);
     }
   }
 }

@@ -3,12 +3,12 @@
   <div class="container">
     <h2>Update User</h2>
     <form (ngSubmit)="onSubmit()" #updateUserForm="ngForm">
-      <div class="form-group">
+      <div class="form-group"  *ngIf="isAdmin">
         <label for="userId">User ID</label>
         <input type="text" class="form-control" id="userId" [(ngModel)]="userId" name="userId" readonly>
       </div>
   
-      <div class="form-group">
+      <div class="form-group" *ngIf="isAdmin">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel">
         <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
@@ -16,7 +16,7 @@
         </div>
       </div>
   
-      <div class="form-group">
+      <div class="form-group" *ngIf="isAdmin">
         <label for="password">Password</label>
         <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password" #password="ngModel">
         <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
@@ -25,7 +25,7 @@
       </div>
   
   
-      <div class="form-group">
+      <div class="form-group" *ngIf="isAdmin">
         <label for="securityQuestion">Security Question</label>
         <input type="text" class="form-control" id="securityQuestion" required [(ngModel)]="user.securityQuestion" name="securityQuestion" #securityQuestion="ngModel">
         <div *ngIf="securityQuestion.invalid && (securityQuestion.dirty || securityQuestion.touched)" class="text-danger">
@@ -33,7 +33,7 @@
         </div>
       </div>
   
-      <div class="form-group">
+      <div class="form-group" *ngIf="isAdmin">
         <label for="securityAnswer">Security Answer</label>
         <input type="text" class="form-control" id="securityAnswer" required [(ngModel)]="user.securityAnswer" name="securityAnswer" #securityAnswer="ngModel">
         <div *ngIf="securityAnswer.invalid && (securityAnswer.dirty || securityAnswer.touched)" class="text-danger">
@@ -57,7 +57,7 @@
         </div>
       </div>
   
-      <div class="form-group">
+      <div class="form-group" *ngIf="isAdmin">
         <label for="gender">Gender</label>
         <select class="form-control" id="gender" required [(ngModel)]="user.gender" name="gender" #gender="ngModel">
           <option value="M">Male</option>
@@ -103,7 +103,7 @@
         </div>
       </div>
   
-      <div class="form-group">
+      <div class="form-group" >
         <label for="creditCard">Credit Card</label>
         <input type="text" class="form-control" id="creditCard" required [(ngModel)]="user.creditCard" name="creditCard" #creditCard="ngModel">
         <div *ngIf="creditCard.invalid && (creditCard.dirty || creditCard.touched)" class="text-danger">

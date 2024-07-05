@@ -26,14 +26,18 @@ export class UpdateUserComponent {
     creditCard: ''
   };
   userId: any;
+  returnLink:any;
   imageError: string | null = null;
   profilePictureInvalid: boolean = false;
   maxFileSize = 2 * 1024 * 1024; // 2MB
-
+  isAdmin: boolean = false;
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {}
 
   async ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('data');
+    this.returnLink = this.route.snapshot.paramMap.get('return');
+    this.isAdmin = this.route.snapshot.paramMap.get('isAdmin') == 'true';
+    console.log(this.isAdmin);
     if (this.userId != null) {
       this.user = await firstValueFrom(this.userService.findbyId(parseInt(this.userId)));
      
@@ -82,7 +86,8 @@ export class UpdateUserComponent {
   async onSubmit() {
     let res = await firstValueFrom(this.userService.updateUser(this.user, parseInt(this.userId))) as User;
     if (res != null) {
-      this.router.navigate(['/admin/registration-requests']);
+      this.ngOnInit();
+      this.router.navigate([this.returnLink,{ data: this.userId ,return: this.returnLink,isAdmin:this.isAdmin}]);
     } else {
       alert("Error updating user!");
     }
