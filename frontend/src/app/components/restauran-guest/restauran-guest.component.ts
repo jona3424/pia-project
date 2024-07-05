@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { RecentReservations } from 'src/app/response/RecentReservations';
+import { Component, OnInit } from '@angular/core';
+import { firstValueFrom, forkJoin } from 'rxjs';
 import { RestaurantsWithWorkers } from 'src/app/response/RestaurantsWithWorkers';
 import { ReservationsService } from 'src/app/service/Reservations/reservations.service';
 import { RestaurantService } from 'src/app/service/Restaurant/restaurant.service';
@@ -12,36 +11,47 @@ import { UserService } from 'src/app/service/User/user.service';
   templateUrl: './restauran-guest.component.html',
   styleUrls: ['./restauran-guest.component.css']
 })
-export class RestauranGuestComponent {
+export class RestauranGuestComponent implements OnInit {
 
-  restaurants: Array<RestaurantsWithWorkers>= [];
-  showingRestaurants: Array<RestaurantsWithWorkers>= [];
+  restaurants: Array<RestaurantsWithWorkers> = [];
+  showingRestaurants: Array<RestaurantsWithWorkers> = [];
   searchName: string = '';
   searchAddress: string = '';
   searchType: string = '';
   sortField: string = '';
   sortType: string = 'asc';
-  constructor( private restaurantService : RestaurantService,private userService:UserService,private reservationService:ReservationsService ,private reviewService:ReviewService) { }
+  ratings: { [key: number]: number } = {};
 
-  async ngOnInit() {  
-    this.restaurants=await firstValueFrom( this.restaurantService.getAllRestaurantsWithWorkers()) as Array<RestaurantsWithWorkers>
+  constructor(
+    private restaurantService: RestaurantService,
+    private userService: UserService,
+    private reservationService: ReservationsService,
+    private reviewService: ReviewService
+  ) { }
+
+  async ngOnInit() {
+    this.restaurants = await firstValueFrom(this.restaurantService.getAllRestaurantsWithWorkers()) as Array<RestaurantsWithWorkers>;
     this.showingRestaurants = [...this.restaurants];
 
+    const ratingObservables = this.showingRestaurants.map(restaurant =>
+      this.reviewService.getReviewsForRestaurant(restaurant.restaurantId)
+    );
+
+    forkJoin(ratingObservables).subscribe(ratings => {
+      ratings.forEach((rating, index) => {
+        this.ratings[this.showingRestaurants[index].restaurantId] = rating;
+      });
+    });
   }
-
-
 
   search(): void {
-    this.showingRestaurants = [];
-    this.restaurants.forEach(restaurant => {
-      if (restaurant.restaurantName.toLowerCase().includes(this.searchName.toLowerCase()) &&
-          restaurant.restaurantAddress.toLowerCase().includes(this.searchAddress.toLowerCase()) &&
-          restaurant.typeOfRestaurant.toLowerCase().includes(this.searchType.toLowerCase())) {
-        this.showingRestaurants.push(restaurant);
-      }
-    });
-
+    this.showingRestaurants = this.restaurants.filter(restaurant =>
+      restaurant.restaurantName.toLowerCase().includes(this.searchName.toLowerCase()) &&
+      restaurant.restaurantAddress.toLowerCase().includes(this.searchAddress.toLowerCase()) &&
+      restaurant.typeOfRestaurant.toLowerCase().includes(this.searchType.toLowerCase())
+    );
   }
+
   reset(): void {
     this.showingRestaurants = [...this.restaurants];
     this.searchName = '';
@@ -51,40 +61,17 @@ export class RestauranGuestComponent {
     this.sortType = 'asc';
   }
 
-  sort(){
-    if(this.sortField=='name'){
-      if(this.sortType=='asc'){
-        this.showingRestaurants.sort((a,b)=>a.restaurantName.localeCompare(b.restaurantName))
-      }else{
-        this.showingRestaurants.sort((a,b)=>b.restaurantName.localeCompare(a.restaurantName))
-      }
-    }else if(this.sortField=='address'){
-      if(this.sortType=='asc'){
-        this.showingRestaurants.sort((a,b)=>a.restaurantAddress.localeCompare(b.restaurantAddress))
-      }else{
-        this.showingRestaurants.sort((a,b)=>b.restaurantAddress.localeCompare(a.restaurantAddress))
-      }
-    }else if(this.sortField=='type'){
-      if(this.sortType=='asc'){
-        this.showingRestaurants.sort((a,b)=>a.typeOfRestaurant.localeCompare(b.typeOfRestaurant))
-      }else{
-        this.showingRestaurants.sort((a,b)=>b.typeOfRestaurant.localeCompare(a.typeOfRestaurant))
-      }
+  sort() {
+    if (this.sortField === 'name') {
+      this.showingRestaurants.sort((a, b) => this.sortType === 'asc' ? a.restaurantName.localeCompare(b.restaurantName) : b.restaurantName.localeCompare(a.restaurantName));
+    } else if (this.sortField === 'address') {
+      this.showingRestaurants.sort((a, b) => this.sortType === 'asc' ? a.restaurantAddress.localeCompare(b.restaurantAddress) : b.restaurantAddress.localeCompare(a.restaurantAddress));
+    } else if (this.sortField === 'type') {
+      this.showingRestaurants.sort((a, b) => this.sortType === 'asc' ? a.typeOfRestaurant.localeCompare(b.typeOfRestaurant) : b.typeOfRestaurant.localeCompare(a.typeOfRestaurant));
     }
   }
 
-  ariaValueText(current: number, max: number) {
-		return `${current} out of ${max} hearts`;
-	}
-  rating = 3.14;
-
-  
- async getRating(restaurantId:number){
-    return await firstValueFrom(this.reviewService.getReviewsForRestaurant(restaurantId)) as number;
-    // let sum=0;
-    // restaurant.reviews.forEach(review=>{
-    //   sum+=review.rating;
-    // })
-    // return sum/restaurant.reviews.length;
+  getRating(restaurantId: number): number {
+    return this.ratings[restaurantId] || 0;
   }
 }

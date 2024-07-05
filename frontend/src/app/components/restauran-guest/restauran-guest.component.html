@@ -50,33 +50,37 @@
     <br>
     <div class="overflow-auto">
         <div class="restaurant-list">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th >Address</th>
-                <th >Type</th>
-                <th>Waiters</th>
-                <th>Rating</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let restaurant of showingRestaurants">
-                <td>{{restaurant.restaurantName}}</td>
-                <td>{{restaurant.restaurantAddress}}</td>
-                <td>{{restaurant.typeOfRestaurant}}</td>
-                <td>
-                <ul>
-                    <li class="list-unstyled" *ngFor="let waiter of restaurant.workerNames">{{waiter}}</li>
-                </ul>
-                </td>
-                <td>{{getRating(restaurant.restaurantId)}}<br>
-                    <!-- <ngb-rating [(rate)]="rating"  [readonly]="true" [max]="5" [ariaValueText]="ariaValueText" /> -->
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Type</th>
+                        <th>Waiters</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let restaurant of showingRestaurants">
+                        <td>{{restaurant.restaurantName}}</td>
+                        <td>{{restaurant.restaurantAddress}}</td>
+                        <td>{{restaurant.typeOfRestaurant}}</td>
+                        <td>
+                            <ul>
+                                <li class="list-unstyled" *ngFor="let waiter of restaurant.workerNames">{{waiter}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            {{ getRating(restaurant.restaurantId) | number: '1.1-1' }}<br>
+                            <div class="stars">
+                              <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                                <i class="fa" [ngClass]="{'fa-star': i < getRating(restaurant.restaurantId), 'fa-star-o': i >= getRating(restaurant.restaurantId)}"></i>
+                              </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
   </div>

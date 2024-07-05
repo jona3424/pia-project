@@ -62,3 +62,14 @@ header {
     font-family: "MilestoneBrush";
     src: local("MilestoneBrush"), url(../../../assets/MilestoneBrush.ttf) format("truetype");
 }
+
+/* restauran-guest.component.css */
+.stars {
+    display: inline-block;
+  }
+  
+  .stars .fa {
+    color: gold;
+    font-size: 1.5em;
+  }
+  
