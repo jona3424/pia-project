@@ -18,9 +18,13 @@ import { ReservationsComponent } from './components/reservations/reservations/re
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 import { WaiterComponent } from './components/waiter/waiter.component';
 import { WaiterReservationsComponent } from './components/waiter-reservations/waiter-reservations.component';
+import { DeliveryComponent } from './components/delivery/delivery.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'line', component: LineChartComponent},
+
   {
     path: 'admin',
     component: AdminComponent,
@@ -51,7 +55,7 @@ const routes: Routes = [
   :[  
     {path: 'update-user', component:UpdateUserComponent},
     {path:'reservations',component:WaiterReservationsComponent},
-
+    {path:'deliveries',component:DeliveryComponent},
   ]
   },
   {path: '', component: HomePageUnregistredComponent}

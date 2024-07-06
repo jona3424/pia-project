@@ -26,6 +26,9 @@ import { DeliveriesComponent } from './components/deliveries/deliveries.componen
 import { WaiterComponent } from './components/waiter/waiter.component';
 import { WaiterReservationsComponent } from './components/waiter-reservations/waiter-reservations.component';
 import { NgxKonvaModule } from 'ngx-konva';
+import { NgChartsModule } from 'ng2-charts';
+import { DeliveryComponent } from './components/delivery/delivery.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 
 @NgModule({
@@ -50,6 +53,8 @@ import { NgxKonvaModule } from 'ngx-konva';
     DeliveriesComponent,
     WaiterComponent,
     WaiterReservationsComponent,
+    DeliveryComponent,
+    LineChartComponent,
   ],
   imports: [
       BrowserModule,
@@ -57,7 +62,8 @@ import { NgxKonvaModule } from 'ngx-konva';
       HttpClientModule,
       FormsModule,
       CommonModule ,
-      NgxKonvaModule
+      NgxKonvaModule,
+      NgChartsModule
       ],
   providers: [],
   bootstrap: [AppComponent],

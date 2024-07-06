@@ -1,0 +1,42 @@
+<div class="container mt-5">
+    <h2>Delivery Orders</h2>
+    <div class="table-responsive">
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.orderId }}</td>
+            <td>{{ order.totalAmount }}</td>
+            <td>{{ order.status }}</td>
+            <td>
+              <div *ngIf="order.status === 'Pending'">
+                <button (click)="selectOrder(order.orderId)" class="btn btn-primary">Select</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="selectedOrderId">
+      <h3>Confirm or Reject Order</h3>
+      <div>
+        <label for="estimatedTime">Estimated Delivery Time</label>
+        <select id="estimatedTime" [(ngModel)]="selectedEstimatedTime" class="form-control">
+          <option *ngFor="let option of estimatedTimeOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      <div>
+        <button (click)="updateOrderStatus(selectedOrderId, 'Confirmed')" class="btn btn-success">Confirm</button>
+        <button (click)="updateOrderStatus(selectedOrderId, 'Rejected')" class="btn btn-danger">Reject</button>
+      </div>
+    </div>
+  </div>
+  

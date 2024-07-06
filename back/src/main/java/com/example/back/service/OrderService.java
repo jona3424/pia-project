@@ -1,19 +1,18 @@
 package com.example.back.service;
 
 import com.example.back.dto.OrderItemDto;
-import com.example.back.entities.MenuItems;
-import com.example.back.entities.OrderItems;
-import com.example.back.entities.Orders;
-import com.example.back.entities.Users;
+import com.example.back.entities.*;
 import com.example.back.repository.OrderItemRepository;
 import com.example.back.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,6 +90,21 @@ public class OrderService {
             }
             return false;
         }).collect(Collectors.toList());
+    }
+    public List<Orders> getAllOrders(Integer restaurantId) {
+        return orderRepository.findAllByRestaurantId(new Restaurants(restaurantId));
+    }
+
+    public Orders updateOrderStatus(Integer orderId, String status, LocalTime estimatedTime) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        order.setStatus(status);
+        if ("Confirmed".equals(status)) {
+            order.setEstimatedTime(estimatedTime);
+            order.setAcceptedAt(new Date());
+        }
+        return orderRepository.save(order);
     }
 }
 

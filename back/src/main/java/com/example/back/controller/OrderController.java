@@ -81,5 +81,14 @@ public class OrderController {
     public ResponseEntity<?> getPastOrders(@PathVariable Integer userId) {
         return ResponseEntity.ok(orderService.findArchivedOrdersWithUsers(userId));
     }
+
+    @GetMapping("/get-restaurant-orders/{restaurantId}")
+    public ResponseEntity<?> getRestaurantOrders(@PathVariable Integer restaurantId) {
+        return ResponseEntity.ok(orderService.getAllOrders(restaurantId));
+    }
+    @PostMapping("/accept-order/{orderId}")
+    public ResponseEntity<?> acceptOrder(@PathVariable Integer orderId, @RequestBody Date estimatedTime) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(orderId, "Confirmed", estimatedTime));
+    }
 }
 
