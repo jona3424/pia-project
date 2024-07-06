@@ -67,15 +67,17 @@ export class RestaurantInfoComponent {
     this.restaurantService.getMenu(restaurantId).subscribe(menu => {
       this.foodMenu = menu.map(food => ({
         ...food,
-        image: `data:image/jpeg;base64,${food.image}`
+        image: `data:image/jpeg;base64,${food.image}`,
       }));
+      console.log(this.foodMenu);
     });
   }
 
-  addToCart(food: Food, quantity: number): void {
-    this.cartService.addToCart(food, quantity);
+  addToCart(food: Food, quantity: number|null): void {
+    this.cartService.addToCart(food, Number(quantity));
     this.cartMessage = `${quantity} x ${food.name} added to cart.`;
-
+    alert(this.cartMessage);
+    food.quantity = null;
     setTimeout(() => {
       this.cartMessage = "";
     }, 3000);

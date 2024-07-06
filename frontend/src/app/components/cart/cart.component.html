@@ -1,1 +1,34 @@
-<p>cart works!</p>
+<div class="container mt-5">
+  <h2>Your Cart</h2>
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>{{ item.food.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.food.price | currency }}</td>
+          <td>{{ (item.food.price * item.quantity) | currency }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="removeFromCart(item.food.itemId)">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-end">
+      <h4>Total: {{ getTotalPrice() | currency }}</h4>
+      <button class="btn btn-success" (click)="finalizeOrder()">Finalize Order</button>
+    </div>
+  </div>
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>
+</div>

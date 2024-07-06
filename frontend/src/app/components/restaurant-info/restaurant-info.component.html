@@ -160,9 +160,6 @@
           </div>
 
           <h3 class="mt-5">Menu</h3>
-          <div *ngIf="cartMessage" class="alert alert-success mt-3">
-            {{ cartMessage }}
-          </div>
           <div class="row">
             <div class="col-md-4" *ngFor="let food of foodMenu">
               <div class="card mb-4">
@@ -172,15 +169,14 @@
                   <p class="card-text">{{ food.description }}</p>
                   <p class="card-text"><strong>{{ food.price | currency }}</strong></p>
                   <div class="form-group">
-                    <label for="quantity-{{ food.id }}">Quantity</label>
-                    <input type="number" id="quantity-{{ food.id }}" [(ngModel)]="food.quantity" name="quantity-{{ food.id }}" class="form-control" min="1" [value]="1">
+                    <label for="quantity-{{ food.itemId }}">Quantity</label>
+                    <input type="number" id="quantity-{{ food.itemId }}" [(ngModel)]="food.quantity" name="quantity-{{ food.itemId }}" class="form-control" min="1" [value]="1">
                   </div>
                   <button class="btn btn-primary mt-2" (click)="addToCart(food, food.quantity)" [disabled]="food.quantity == 0 || food.quantity == null">Add to Cart</button>
                 </div>
               </div>
             </div>
           </div>
-          
       </div>
     </div>
   </div>

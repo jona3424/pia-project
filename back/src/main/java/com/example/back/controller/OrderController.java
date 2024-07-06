@@ -1,11 +1,15 @@
 package com.example.back.controller;
 
+import com.example.back.dto.OrderDto;
 import com.example.back.entities.Orders;
+import com.example.back.entities.Restaurants;
+import com.example.back.entities.Users;
 import com.example.back.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +55,23 @@ public class OrderController {
     public ResponseEntity<Void> deleteOrder(@PathVariable Integer id) {
         orderService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/make-order")
+    public ResponseEntity<?> createOrder(@RequestBody OrderDto orderDto) {
+        try{
+            Orders order = new Orders();
+            order.setUserId(new Users(orderDto.getUserId()));
+            order.setRestaurantId(orderDto.getRestaurantId());
+            order.setTotalAmount(orderDto.getTotalAmount());
+            order.setStatus(orderDto.getStatus());
+            orderService.saveOrder(order, orderDto.getOrderItems());
+            return ResponseEntity.ok("Order successfully created.");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error creating order.");
+        }
+
     }
 }
 

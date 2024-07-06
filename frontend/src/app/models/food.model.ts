@@ -1,10 +1,12 @@
+import { Restaurant } from "../entities/Restaurant";
+
 export interface Food {
-  id: number;
+  itemId: number;
   name: string;
   description: string;
   price: number;
   image: string; // Base64 string
   createdAt: Date;
-  restaurantId: number;
-  quantity: number; // Dodato za prikaz količine
+  restaurantId: Restaurant;
+  quantity: number |null; // Dodato za prikaz količine
 }

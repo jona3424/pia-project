@@ -49,7 +49,7 @@ public class Orders implements Serializable {
     private BigDecimal totalAmount;
     @Column(name = "status")
     private String status;
-    @Basic(optional = false)
+
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

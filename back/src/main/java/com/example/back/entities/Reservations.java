@@ -7,6 +7,8 @@ package com.example.back.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -72,6 +74,7 @@ public class Reservations implements Serializable {
     @ManyToOne
     private RestaurantTables tableId;
     @OneToMany(mappedBy = "reservationId")
+    @JsonIgnore
     private List<Reviews> reviewsList;
 
     public Reservations() {

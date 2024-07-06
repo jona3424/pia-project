@@ -6,6 +6,8 @@ package com.example.back.entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,9 +47,11 @@ public class RestaurantTables implements Serializable {
     @Column(name = "table_shape")
     private String tableShape;
     @OneToMany(mappedBy = "tableId")
+    @JsonIgnore
     private List<Reservations> reservationsList;
     @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id")
     @ManyToOne
+
     private Restaurants restaurantId;
 
     public RestaurantTables() {
