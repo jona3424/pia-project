@@ -12,6 +12,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { GuestComponent } from './components/guest/guest.component';
 import { RestauranGuestComponent } from './components/restauran-guest/restauran-guest.component';
+import { RestaurantInfoComponent } from './components/restaurant-info/restaurant-info.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -32,7 +34,11 @@ const routes: Routes = [
   {path: 'gost', component: GuestComponent,
   children:[
     {path: 'update-user', component:UpdateUserComponent},
-    {path: 'restaurant-guest', component:RestauranGuestComponent}
+    {path:'cart',component:CartComponent},
+    {path: 'restaurant-guest', component:RestauranGuestComponent, children:[
+      {path: 'restaurant-info', component:RestaurantInfoComponent}
+    ]
+    }
   ]
   },
   {path: '', component: HomePageUnregistredComponent}

@@ -1,6 +1,7 @@
 package com.example.back.service;
 
 import com.example.back.entities.MenuItems;
+import com.example.back.entities.Restaurants;
 import com.example.back.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class MenuItemService {
 
     public void deleteById(Integer id) {
         menuItemRepository.deleteById(id);
+    }
+
+    public List<MenuItems> findByRestaurantId(Integer restaurantId) {
+        return menuItemRepository.findByRestaurantId(new Restaurants(restaurantId));
     }
 }
 

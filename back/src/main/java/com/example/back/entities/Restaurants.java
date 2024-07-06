@@ -5,8 +5,11 @@
 package com.example.back.entities;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -69,16 +72,33 @@ public class Restaurants implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Column(name = "latitude")
+    private Double latitude;
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Column(name = "opening_time")
+    private LocalTime openingTime;
+
+    @Column(name = "closing_time")
+    private LocalTime closingTime;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<Reservations> reservationsList;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<Reviews> reviewsList;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<MenuItems> menuItemsList;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<Orders> ordersList;
     @OneToMany(mappedBy = "restaurantId")
+    @JsonIgnore
     private List<RestaurantTables> restaurantTablesList;
+
 
     public Restaurants() {
     }
@@ -87,7 +107,7 @@ public class Restaurants implements Serializable {
         this.restaurantId = restaurantId;
     }
 
-    public Restaurants(Integer restaurantId, String name, String type, String address, String contactPerson, String phoneNumber, Date createdAt) {
+    public Restaurants(Integer restaurantId, String name, String type, String address, String contactPerson, String phoneNumber, Date createdAt, Double latitude, Double longitude, LocalTime openingTime, LocalTime closingTime) {
         this.restaurantId = restaurantId;
         this.name = name;
         this.type = type;
@@ -95,6 +115,10 @@ public class Restaurants implements Serializable {
         this.contactPerson = contactPerson;
         this.phoneNumber = phoneNumber;
         this.createdAt = createdAt;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
     }
 
     public Integer getRestaurantId() {
@@ -207,6 +231,37 @@ public class Restaurants implements Serializable {
 
     public void setRestaurantTablesList(List<RestaurantTables> restaurantTablesList) {
         this.restaurantTablesList = restaurantTablesList;
+    }
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public LocalTime getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(LocalTime openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(LocalTime closingTime) {
+        this.closingTime = closingTime;
     }
 
     @Override

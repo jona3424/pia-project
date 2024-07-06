@@ -55,7 +55,7 @@ public class MenuItems implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
     @Lob
-    @Column(name = "image")
+    @Column(name = "image" ,columnDefinition = "LONGBLOB")
     private byte[] image;
     @Basic(optional = false)
     @Column(name = "created_at")

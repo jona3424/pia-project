@@ -16,6 +16,8 @@
       </nav>
     </div>
     <h3 class="headerComponentName" >Guest component</h3>
+    <img  src="../../../assets/cart.png" style="width: 90px; height: 90px; margin-left: 2%;" class="btn btn-light btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'cart'}" (click)="selectComponent1('cart',currentUser.userId)">
+
   </header>
   
   <div class="container mt-4">

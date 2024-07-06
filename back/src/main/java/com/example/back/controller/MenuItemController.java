@@ -52,5 +52,10 @@ public class MenuItemController {
         menuItemService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/menu-items-for-restaurant/{restaurantId}")
+    public List<MenuItems> getMenuItemsForRestaurant(@PathVariable Integer restaurantId) {
+        return menuItemService.findByRestaurantId(restaurantId);
+    }
 }
 

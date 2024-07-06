@@ -62,7 +62,11 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let restaurant of showingRestaurants">
-                        <td>{{restaurant.restaurantName}}</td>
+                        <td> 
+                        <p  class="card-text bg-light" style="transform: rotate(0);">
+                            <a class="text-blue stretched-link"  (click)="selectComponent('restaurant-info',restaurant.restaurantId)">{{restaurant.restaurantName}}</a>
+                        </p>
+                        </td>
                         <td>{{restaurant.restaurantAddress}}</td>
                         <td>{{restaurant.typeOfRestaurant}}</td>
                         <td>
@@ -84,3 +88,4 @@
         </div>
     </div>
   </div>
+  <router-outlet></router-outlet>

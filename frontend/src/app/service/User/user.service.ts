@@ -12,6 +12,7 @@ export class UserService {
       username: username,
       password: password
     }
+    console.log(data)
     return this.http.post<User>("http://localhost:8080/users/login", data)
   }
 

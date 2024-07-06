@@ -12,4 +12,8 @@ export class ReservationsService {
   getNumberOfReservations() {
     return this.http.get<RecentReservations>('http://localhost:8080/reservations/number-of-reservations');
   }
+  
+  makeReservation(restaurantId: number,userId:number, reservationForm: any) {
+    return this.http.post<string>(`http://localhost:8080/reservations/make-reservation/${restaurantId}/${userId}`, reservationForm, {responseType: 'text' as 'json'});
+  }
 }

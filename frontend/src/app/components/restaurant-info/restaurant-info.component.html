@@ -1,0 +1,187 @@
+<div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">{{ restaurantDetails.name }}</h2>
+        <p class="card-text"><strong>Address:</strong> {{ restaurantDetails.address }}</p>
+        <p class="card-text"><strong>Type:</strong> {{ restaurantDetails.type }}</p>
+        <p class="card-text"><strong>Phone:</strong> {{ restaurantDetails.phoneNumber }}</p>
+  
+        <div id="map" class="map-container mb-4">
+          <leaflet-map [latitude]="restaurantDetails.latitude" [longitude]="restaurantDetails.longitude" *ngIf="restaurantDetails.latitude!=0"></leaflet-map>
+        </div>
+  
+        <h3>Reviews</h3>
+        <div class="overflow-auto">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <p>Placeholder </p>
+              <!-- <tr *ngFor="let review of restaurantDetails.reviews">
+                <td>{{ review.user }}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.comment }}</td>
+                <td>{{ review.date }}</td>
+              </tr> -->
+              <tr>
+                <td>
+                  <p>aaaa</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>bbbbb</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>nnnn</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        
+  
+        <h3>Make a Reservation</h3>
+          <form (ngSubmit)="makeReservation(reservationForm)" #reservationForm="ngForm" class="mt-4">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" name="date" ngModel class="form-control" required>
+            </div>
+            <div class="form-group mt-3">
+              <label for="time">Time</label>
+              <input type="time" id="time" name="time" ngModel class="form-control" required>
+            </div>
+            <div class="form-group mt-3">
+              <label for="numberOfPeople">Number of People</label>
+              <input type="number" id="numberOfPeople" name="numberOfPeople" ngModel class="form-control" required>
+            </div>
+            <div class="form-group mt-3">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" ngModel class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" [disabled]="!reservationForm.valid">Reserve</button>
+          </form>
+          <div *ngIf="reservationMessage" class="alert mt-3" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}" role="alert">
+            {{ reservationMessage }}
+          </div>
+
+          <h3 class="mt-5">Menu</h3>
+          <div *ngIf="cartMessage" class="alert alert-success mt-3">
+            {{ cartMessage }}
+          </div>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let food of foodMenu">
+              <div class="card mb-4">
+                <img [src]="food.image" class="card-img-top" alt="{{ food.name }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ food.name }}</h5>
+                  <p class="card-text">{{ food.description }}</p>
+                  <p class="card-text"><strong>{{ food.price | currency }}</strong></p>
+                  <div class="form-group">
+                    <label for="quantity-{{ food.id }}">Quantity</label>
+                    <input type="number" id="quantity-{{ food.id }}" [(ngModel)]="food.quantity" name="quantity-{{ food.id }}" class="form-control" min="1" [value]="1">
+                  </div>
+                  <button class="btn btn-primary mt-2" (click)="addToCart(food, food.quantity)" [disabled]="food.quantity == 0 || food.quantity == null">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+  

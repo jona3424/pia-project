@@ -23,4 +23,12 @@ export class RestaurantService {
   assingWorkerToRestaurant(workerId: number, restaurantId: number){
     return this.http.post<string>(`http://localhost:8080/restaurants/assign-worker/${restaurantId}/${workerId}`,null,{responseType: 'text' as 'json'})
   }
+
+  getRestaurantById(restaurantId: number){
+    return this.http.get<Restaurant>(`http://localhost:8080/restaurants/${restaurantId}`)
+  }
+
+  getMenu(restaurantId: number){
+    return this.http.get<Array<any>>(`http://localhost:8080/menu-items/menu-items-for-restaurant/${restaurantId}`)
+  }
 }

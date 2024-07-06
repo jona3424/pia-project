@@ -18,6 +18,9 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
 import { GuestComponent } from './components/guest/guest.component';
 import { RestauranGuestComponent } from './components/restauran-guest/restauran-guest.component';
 import { CommonModule } from '@angular/common';
+import { RestaurantInfoComponent } from './components/restaurant-info/restaurant-info.component';
+import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.component';
+import { CartComponent } from './components/cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +36,9 @@ import { CommonModule } from '@angular/common';
     UpdateUserComponent,
     GuestComponent,
     RestauranGuestComponent,
+    RestaurantInfoComponent,
+    LeafletMapComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

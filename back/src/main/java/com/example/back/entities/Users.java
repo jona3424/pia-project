@@ -7,6 +7,8 @@ package com.example.back.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -101,10 +103,13 @@ public class Users implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private List<Reservations> reservationsList;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private List<Reviews> reviewsList;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private List<Orders> ordersList;
 
     public Users() {

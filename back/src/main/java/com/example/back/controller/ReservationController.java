@@ -1,5 +1,6 @@
 package com.example.back.controller;
 
+import com.example.back.dto.ReservationDto;
 import com.example.back.entities.Reservations;
 import com.example.back.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,11 @@ public class ReservationController {
     @GetMapping("/number-of-reservations")
     public ResponseEntity<?> getNumberOfReservations() {
         return ResponseEntity.ok(reservationService.getNumberOfReservations());
+    }
+
+    @PostMapping(path="/make-reservation/{restaurantId}/{userId}")
+    public ResponseEntity<?> makeReservation(@PathVariable Integer restaurantId,@PathVariable Integer userId, @RequestBody ReservationDto reservation) {
+        String s= reservationService.makeReservation(restaurantId,userId, reservation);
+        return ResponseEntity.ok().body(s);
     }
 }

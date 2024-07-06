@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, forkJoin } from 'rxjs';
 import { RestaurantsWithWorkers } from 'src/app/response/RestaurantsWithWorkers';
 import { ReservationsService } from 'src/app/service/Reservations/reservations.service';
@@ -21,15 +22,25 @@ export class RestauranGuestComponent implements OnInit {
   sortField: string = '';
   sortType: string = 'asc';
   ratings: { [key: number]: number } = {};
+  activeButton: string = '';
+
+  isAdmin: boolean = false;
+  userId: any;
+  returnLink:any;
 
   constructor(
     private restaurantService: RestaurantService,
     private userService: UserService,
     private reservationService: ReservationsService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   async ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('data');
+    this.returnLink = this.route.snapshot.paramMap.get('return');
+    this.isAdmin = this.route.snapshot.paramMap.get('isAdmin') == 'true';
     this.restaurants = await firstValueFrom(this.restaurantService.getAllRestaurantsWithWorkers()) as Array<RestaurantsWithWorkers>;
     this.showingRestaurants = [...this.restaurants];
 
@@ -73,5 +84,17 @@ export class RestauranGuestComponent implements OnInit {
 
   getRating(restaurantId: number): number {
     return this.ratings[restaurantId] || 0;
+  }
+
+  selectComponent(component: string,restaurantId:Number): void {
+    if (this.activeButton === (component + restaurantId)) {
+      this.activeButton = '';
+      this.router.navigate(['/gost/restaurant-guest']);
+    } else {
+      this.activeButton = (component + restaurantId);
+      this.router.navigateByUrl('/gost/restaurant-guest', { skipLocationChange: true }).then(() => {
+        this.router.navigate([`/gost/restaurant-guest/${component}`,{ data: this.userId ,return: `/gost/restaurant-guest/`,isAdmin:'false',rId:restaurantId}]);
+      });
+    }
   }
 }
