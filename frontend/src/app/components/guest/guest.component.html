@@ -11,8 +11,8 @@
         <button  class="btn btn-outline-primary me-2" (click)="logout()">LogOut</button>
         <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'update-user'}" (click)="selectComponent1('update-user',currentUser.userId)">Update user info</button>
         <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'restaurant-guest'}" (click)="selectComponent1('restaurant-guest',currentUser.userId)">Restaurants</button>
-        <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'add-waiter'}" (click)="selectComponent1('add-waiter',currentUser.userId)">Reservations</button>
-        <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'add-waiter'}" (click)="selectComponent1('add-waiter',currentUser.userId)">Food delivery</button>
+        <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'reservations'}" (click)="selectComponent1('reservations',currentUser.userId)">Reservations</button>
+        <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'deliveries'}" (click)="selectComponent1('deliveries',currentUser.userId)">Food delivery</button>
       </nav>
     </div>
     <h3 class="headerComponentName" >Guest component</h3>

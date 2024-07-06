@@ -16,4 +16,11 @@ export class ReservationsService {
   makeReservation(restaurantId: number,userId:number, reservationForm: any) {
     return this.http.post<string>(`http://localhost:8080/reservations/make-reservation/${restaurantId}/${userId}`, reservationForm, {responseType: 'text' as 'json'});
   }
+
+  getActiveReservations(userId: number) {
+    return this.http.get<any[]>(`http://localhost:8080/reservations/active-reservations-with-users/${userId}`);
+  }
+  getInactiveReservations(userId: number) {
+    return this.http.get<any[]>(`http://localhost:8080/reservations/inactive-reservations-with-users/${userId}`);
+  }
 }

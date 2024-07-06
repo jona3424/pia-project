@@ -1,0 +1,45 @@
+<div class="container mt-5">
+    <h2>Food Deliveries</h2>
+  
+    <h3>Current Deliveries</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Restaurant Name</th>
+            <th>Order Status</th>
+            <th>Estimated Delivery Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let delivery of currentDeliveries">
+            <td>{{ delivery.restaurantId.name }}</td>
+            <td>{{ delivery.status }}</td>
+            <td *ngIf="delivery.estimatedTime">{{ formatEstimatedTime(delivery.estimatedTime) }}</td>
+            <td *ngIf="!delivery.estimatedTime">Pending Confirmation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <h3>Archived Deliveries</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Acceptance Date</th>
+            <th>Restaurant Name</th>
+            <th>Order Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let delivery of archivedDeliveries">
+            <td>{{ delivery.acceptedAt | date: 'short' }}</td>
+            <td>{{ delivery.restaurantId.name }}</td>
+            <td>{{ delivery.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -4,14 +4,19 @@ import com.example.back.dto.OrderItemDto;
 import com.example.back.entities.MenuItems;
 import com.example.back.entities.OrderItems;
 import com.example.back.entities.Orders;
+import com.example.back.entities.Users;
 import com.example.back.repository.OrderItemRepository;
 import com.example.back.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -49,6 +54,43 @@ public class OrderService {
             orderItemsList.add(orderItem);
         }
         orderItemRepository.saveAllAndFlush(orderItemsList);
+    }
+    public List<Orders> findActiveOrdersWithUsers(int userId) {
+        List<Orders> orders = orderRepository.findActiveOrdersWithUsers(userId);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        return orders.stream().filter(order -> {
+            if ("Pending".equals(order.getStatus())) {
+                return true;
+            }
+            if ("Confirmed".equals(order.getStatus()) && order.getAcceptedAt() != null && order.getEstimatedTime() != null) {
+                LocalDateTime acceptedAt = LocalDateTime.ofInstant(order.getAcceptedAt().toInstant(), ZoneId.systemDefault());
+                LocalDateTime estimatedDeliveryTime = acceptedAt.plus(order.getEstimatedTime().getHour(), ChronoUnit.HOURS)
+                        .plus(order.getEstimatedTime().getMinute(), ChronoUnit.MINUTES);
+                return estimatedDeliveryTime.isAfter(now);
+            }
+            return false;
+        }).collect(Collectors.toList());
+    }
+
+    public List<Orders> findArchivedOrdersWithUsers(int userId) {
+        List<Orders> orders = orderRepository.findArchivedOrdersWithUsers(userId);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        return orders.stream().filter(order -> {
+            if ("Canceled".equals(order.getStatus())) {
+                return true;
+            }
+            if ("Confirmed".equals(order.getStatus()) && order.getAcceptedAt() != null && order.getEstimatedTime() != null) {
+                LocalDateTime acceptedAt = LocalDateTime.ofInstant(order.getAcceptedAt().toInstant(), ZoneId.systemDefault());
+                LocalDateTime estimatedDeliveryTime = acceptedAt.plus(order.getEstimatedTime().getHour(), ChronoUnit.HOURS)
+                        .plus(order.getEstimatedTime().getMinute(), ChronoUnit.MINUTES);
+                return estimatedDeliveryTime.isBefore(now);
+            }
+            return false;
+        }).collect(Collectors.toList());
     }
 }
 

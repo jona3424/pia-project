@@ -49,25 +49,30 @@ public class ReservationService {
 
     public RecentReservations getNumberOfReservations() {
         RecentReservations recentReservations = new RecentReservations();
-        Date currentDate = new Date();
 
-    // Get the date 24 hours before now
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.HOUR, -24);
-        Date dateBefore24Hours = cal.getTime();
+        // Get the current date and time
+        LocalDateTime now = LocalDateTime.now();
 
-        recentReservations.setReservations24Hrs( reservationRepository.findInLastXDays(dateBefore24Hours,currentDate).size() );
+        // Convert LocalDateTime to Date for querying
+        Date currentDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
 
-        // Get the date 7 days before now
-        cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -7);
-        Date dateBefore7Days = cal.getTime();
-        recentReservations.setReservations7Days( reservationRepository.findInLastXDays(dateBefore7Days,currentDate).size());
-        // Get the date 30 days before now
-        cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -30);
-        Date dateBefore30Days = cal.getTime();
-        recentReservations.setReservations30Days( reservationRepository.findInLastXDays(dateBefore30Days,currentDate).size());
+        // Get the date and time 24 hours before now
+        LocalDateTime dateBefore24Hours = now.minusHours(24);
+        Date dateBefore24HoursDate = Date.from(dateBefore24Hours.atZone(ZoneId.systemDefault()).toInstant());
+
+        recentReservations.setReservations24Hrs(reservationRepository.findInLastXDays(dateBefore24HoursDate, currentDate).size());
+
+        // Get the date and time 7 days before now
+        LocalDateTime dateBefore7Days = now.minusDays(7);
+        Date dateBefore7DaysDate = Date.from(dateBefore7Days.atZone(ZoneId.systemDefault()).toInstant());
+
+        recentReservations.setReservations7Days(reservationRepository.findInLastXDays(dateBefore7DaysDate, currentDate).size());
+
+        // Get the date and time 30 days before now
+        LocalDateTime dateBefore30Days = now.minusDays(30);
+        Date dateBefore30DaysDate = Date.from(dateBefore30Days.atZone(ZoneId.systemDefault()).toInstant());
+
+        recentReservations.setReservations30Days(reservationRepository.findInLastXDays(dateBefore30DaysDate, currentDate).size());
 
         return recentReservations;
     }
@@ -126,6 +131,14 @@ public class ReservationService {
         }
 
         return "No available tables for the selected date and time.";
+    }
+
+
+    public List<Reservations>getActiveReservationsWithUsers(Integer userId){
+        return reservationRepository.findActiveReservationsWithUsers(new Users(userId));
+    }
+    public List<Reservations> getInactiveReservationsWithUsers(Integer userId){
+        return reservationRepository.findInactiveReservationsWithUsers(new Users(userId));
     }
 }
 

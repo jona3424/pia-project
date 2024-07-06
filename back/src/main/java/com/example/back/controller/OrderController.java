@@ -73,5 +73,13 @@ public class OrderController {
         }
 
     }
+    @GetMapping("/current-orders/{userId}")
+    public ResponseEntity<?> getCurrentOrders(@PathVariable Integer userId) {
+        return ResponseEntity.ok(orderService.findActiveOrdersWithUsers(userId));
+    }
+    @GetMapping("/past-orders/{userId}")
+    public ResponseEntity<?> getPastOrders(@PathVariable Integer userId) {
+        return ResponseEntity.ok(orderService.findArchivedOrdersWithUsers(userId));
+    }
 }
 

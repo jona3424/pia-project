@@ -28,9 +28,10 @@ export class HomePageUnregistredComponent {
 
   async ngOnInit() {
     let response=await firstValueFrom( this.reservationService.getNumberOfReservations()) as RecentReservations
-    this.reservationsLast24Hours = response.Reservations24Hrs==null?0:response.Reservations24Hrs;
-    this.reservationsLast7Days = response.Reservations7Days==null?0:response.Reservations7Days;
-    this.reservationsLast30Days = response.Reservations30Days==null?0:response.Reservations30Days;
+    this.reservationsLast24Hours = response.reservations24Hrs==null?0:response.reservations24Hrs;
+    this.reservationsLast7Days = response.reservations7Days==null?0:response.reservations7Days;
+    this.reservationsLast30Days = response.reservations30Days==null?0:response.reservations30Days;
+
     this.totalRestaurants = await firstValueFrom( this.restaurantService.getNumberOfRestaurants());
     this.totalGuests = await firstValueFrom( this.userService.getNumberOfGuests());
     this.restaurants=await firstValueFrom( this.restaurantService.getAllRestaurantsWithWorkers()) as Array<RestaurantsWithWorkers>

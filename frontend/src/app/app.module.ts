@@ -21,6 +21,8 @@ import { CommonModule } from '@angular/common';
 import { RestaurantInfoComponent } from './components/restaurant-info/restaurant-info.component';
 import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.component';
 import { CartComponent } from './components/cart/cart.component';
+import { ReservationsComponent } from './components/reservations/reservations/reservations.component';
+import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +41,8 @@ import { CartComponent } from './components/cart/cart.component';
     RestaurantInfoComponent,
     LeafletMapComponent,
     CartComponent,
+    ReservationsComponent,
+    DeliveriesComponent,
   ],
   imports: [
     BrowserModule,

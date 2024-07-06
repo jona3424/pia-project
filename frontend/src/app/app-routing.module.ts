@@ -14,6 +14,8 @@ import { GuestComponent } from './components/guest/guest.component';
 import { RestauranGuestComponent } from './components/restauran-guest/restauran-guest.component';
 import { RestaurantInfoComponent } from './components/restaurant-info/restaurant-info.component';
 import { CartComponent } from './components/cart/cart.component';
+import { ReservationsComponent } from './components/reservations/reservations/reservations.component';
+import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -35,6 +37,8 @@ const routes: Routes = [
   children:[
     {path: 'update-user', component:UpdateUserComponent},
     {path:'cart',component:CartComponent},
+    {path:'reservations',component:ReservationsComponent},
+    {path:'deliveries',component:DeliveriesComponent},
     {path: 'restaurant-guest', component:RestauranGuestComponent, children:[
       {path: 'restaurant-info', component:RestaurantInfoComponent}
     ]

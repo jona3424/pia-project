@@ -66,4 +66,12 @@ public class ReservationController {
         String s= reservationService.makeReservation(restaurantId,userId, reservation);
         return ResponseEntity.ok().body(s);
     }
+    @GetMapping("/active-reservations-with-users/{userId}")
+    public ResponseEntity<?> getActiveReservationsWithUsers(@PathVariable Integer userId) {
+        return ResponseEntity.ok().body(reservationService.getActiveReservationsWithUsers(userId));
+    }
+    @GetMapping("/inactive-reservations-with-users/{userId}")
+    public ResponseEntity<?> getInactiveReservationsWithUsers(@PathVariable Integer userId) {
+        return ResponseEntity.ok().body(reservationService.getInactiveReservationsWithUsers(userId));
+    }
 }

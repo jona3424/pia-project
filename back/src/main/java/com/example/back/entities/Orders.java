@@ -6,6 +6,7 @@ package com.example.back.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.Basic;
@@ -22,6 +23,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jdk.jfr.Name;
 
 /**
  *
@@ -34,7 +36,8 @@ import jakarta.persistence.TemporalType;
     @NamedQuery(name = "Orders.findByOrderId", query = "SELECT o FROM Orders o WHERE o.orderId = :orderId"),
     @NamedQuery(name = "Orders.findByTotalAmount", query = "SELECT o FROM Orders o WHERE o.totalAmount = :totalAmount"),
     @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.status = :status"),
-    @NamedQuery(name = "Orders.findByCreatedAt", query = "SELECT o FROM Orders o WHERE o.createdAt = :createdAt")})
+    @NamedQuery(name = "Orders.findByCreatedAt", query = "SELECT o FROM Orders o WHERE o.createdAt = :createdAt")
+})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,10 +52,14 @@ public class Orders implements Serializable {
     private BigDecimal totalAmount;
     @Column(name = "status")
     private String status;
-
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    @Column(name = "estimated_time")
+    private LocalTime estimatedTime;
+    @Column(name = "accepted_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date acceptedAt;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne
     private Users userId;
@@ -129,6 +136,22 @@ public class Orders implements Serializable {
 
     public void setOrderItemsList(List<OrderItems> orderItemsList) {
         this.orderItemsList = orderItemsList;
+    }
+
+    public LocalTime getEstimatedTime() {
+        return estimatedTime;
+    }
+
+    public void setEstimatedTime(LocalTime estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
+    public Date getAcceptedAt() {
+        return acceptedAt;
+    }
+
+    public void setAcceptedAt(Date acceptedAt) {
+        this.acceptedAt = acceptedAt;
     }
 
     @Override

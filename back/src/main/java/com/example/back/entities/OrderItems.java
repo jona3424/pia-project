@@ -6,6 +6,8 @@ package com.example.back.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +48,7 @@ public class OrderItems implements Serializable {
     private BigDecimal price;
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     @ManyToOne
+    @JsonIgnore
     private Orders orderId;
     @JoinColumn(name = "menu_item_id", referencedColumnName = "item_id")
     @ManyToOne

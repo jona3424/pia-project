@@ -38,7 +38,9 @@ import jakarta.persistence.TemporalType;
     @NamedQuery(name = "Reservations.findByNumberOfGuests", query = "SELECT r FROM Reservations r WHERE r.numberOfGuests = :numberOfGuests"),
     @NamedQuery(name = "Reservations.findByStatus", query = "SELECT r FROM Reservations r WHERE r.status = :status"),
     @NamedQuery(name = "Reservations.findByCreatedAt", query = "SELECT r FROM Reservations r WHERE r.createdAt = :createdAt"),
-    @NamedQuery(name = "Reservations.findInLastXDays", query = "SELECT r FROM Reservations r WHERE r.createdAt >= :date and r.createdAt <= :date2"),
+    @NamedQuery(name="Reservations.findActiveReservationsWithUsers", query="SELECT r FROM Reservations r WHERE (r.status = 'Active' OR r.status = 'Pending')  AND r.userId = :userId ORDER BY r.reservationDate DESC"),
+    @NamedQuery(name="Reservations.findInactiveReservationsWithUsers", query="SELECT r FROM Reservations r WHERE (r.status = 'Canceled' OR r.status = 'Done')  AND r.userId = :userId ORDER BY r.reservationDate DESC "),
+
 })
 public class Reservations implements Serializable {
 
