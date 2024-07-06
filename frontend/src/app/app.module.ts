@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,11 @@ import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.compon
 import { CartComponent } from './components/cart/cart.component';
 import { ReservationsComponent } from './components/reservations/reservations/reservations.component';
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
+import { WaiterComponent } from './components/waiter/waiter.component';
+import { WaiterReservationsComponent } from './components/waiter-reservations/waiter-reservations.component';
+import { NgxKonvaModule } from 'ngx-konva';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,15 +48,19 @@ import { DeliveriesComponent } from './components/deliveries/deliveries.componen
     CartComponent,
     ReservationsComponent,
     DeliveriesComponent,
+    WaiterComponent,
+    WaiterReservationsComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    CommonModule 
-    ],
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      FormsModule,
+      CommonModule ,
+      NgxKonvaModule
+      ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]  // Add this line
 })
 export class AppModule { }

@@ -31,4 +31,8 @@ export class RestaurantService {
   getMenu(restaurantId: number){
     return this.http.get<Array<any>>(`http://localhost:8080/menu-items/menu-items-for-restaurant/${restaurantId}`)
   }
+
+  getRestaurantByWorkerId(workerId: number){
+    return this.http.get<any>(`http://localhost:8080/restaurants/restaurant-for-worker/${workerId}`)
+  }
 }

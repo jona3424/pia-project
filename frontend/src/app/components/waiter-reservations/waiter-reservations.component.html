@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <h2>Unprocessed Reservations</h2>
+  <div class="table-responsive">
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Reservation Date</th>
+          <th>Restaurant</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of unprocessedReservations" [class.selected-row]="reservation === selectedReservation">
+          <td>{{ reservation.reservationDate | date: 'short' }}</td>
+          <td>{{ reservation.restaurantId.name }}</td>
+          <td>
+            <button (click)="toggleOrSelect(reservation)" class="btn btn-primary">
+              {{reservation === selectedReservation ? 'Hide' : 'Show more'}}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="selectedReservation">
+    <h3>Confirm or Reject Reservation</h3>
+    <div>
+      <label for="tableId">Table ID</label>
+      <select id="tableId" [(ngModel)]="tableId" class="form-control" (change)="onTableSelect()">
+        <option *ngFor="let table of allTables" [value]="table.tableId" [disabled]="table.unavailable || table.overCapacity">
+          {{table.tableId}}
+        </option>
+      </select>
+    </div>
+    <div>
+      <button (click)="confirmReservation(selectedReservation.reservationId)" class="btn btn-success">Confirm</button>
+    </div>
+    <div>
+      <label for="comment">Comment</label>
+      <textarea id="comment" [(ngModel)]="comment" class="form-control"></textarea>
+    </div>
+    <div>
+      <button (click)="rejectReservation(selectedReservation.reservationId)" class="btn btn-danger">Reject</button>
+    </div>
+  </div>
+  <div style="overflow-x: auto; white-space: nowrap;">
+    <h1>Canvas Table Selector</h1>
+    <canvas id="tableCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+  </div>
+</div>

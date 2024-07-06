@@ -76,5 +76,10 @@ public class RestaurantController {
             return ResponseEntity.badRequest().body("Worker already assigned to restaurant");
         }
         }
+
+    @GetMapping("/restaurant-for-worker/{workerId}")
+    public ResponseEntity<?> getRestaurantForWorker(@PathVariable Integer workerId) {
+        return ResponseEntity.ok().body(restaurantService.getRestaurantForWorker(workerId));
+    }
 }
 

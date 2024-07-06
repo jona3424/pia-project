@@ -88,5 +88,18 @@ public class RestaurantService {
         return true;
 
     }
+    public Restaurants getRestaurantForWorker(Integer workerId) {
+        Users user = usersRepository.findById(workerId).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("User with ID " + workerId + " does not exist.");
+        }
+
+        RestaurantWorker restaurantWorker = restaurantWorkerRepository.findByUserId(user);
+        if (restaurantWorker == null) {
+            throw new IllegalArgumentException("User with ID " + workerId + " is not assigned to any restaurant.");
+        }
+
+        return restaurantWorker.getRestaurantId();
+    }
 }
 

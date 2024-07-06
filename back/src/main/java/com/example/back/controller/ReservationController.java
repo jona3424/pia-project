@@ -1,12 +1,17 @@
 package com.example.back.controller;
 
+import com.example.back.dto.ConfirmReservationRequest;
+import com.example.back.dto.CustomTable;
+import com.example.back.dto.RejectReservationRequest;
 import com.example.back.dto.ReservationDto;
 import com.example.back.entities.Reservations;
+import com.example.back.entities.RestaurantTables;
 import com.example.back.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,5 +78,31 @@ public class ReservationController {
     @GetMapping("/inactive-reservations-with-users/{userId}")
     public ResponseEntity<?> getInactiveReservationsWithUsers(@PathVariable Integer userId) {
         return ResponseEntity.ok().body(reservationService.getInactiveReservationsWithUsers(userId));
+    }
+
+    @GetMapping("/unprocessed/{restaurantId}")
+    public List<Reservations> getUnprocessedReservations(@PathVariable int restaurantId) {
+        return reservationService.getUnprocessedReservations(restaurantId);
+    }
+
+    @PostMapping("/confirm")
+    public ResponseEntity<?> confirmReservation(@RequestBody ConfirmReservationRequest request) {
+        reservationService.confirmReservation(request.getReservationId(), request.getTableId(), request.getWaiterId());
+        return ResponseEntity.ok("Reservation confirmed.");
+    }
+
+    @PostMapping("/reject")
+    public ResponseEntity<?> rejectReservation(@RequestBody RejectReservationRequest request) {
+        reservationService.rejectReservation(request.getReservationId(), request.getComment());
+        return ResponseEntity.ok("Reservation rejected.");
+    }
+
+    @GetMapping("/allTables/{restaurantId}")
+    public ResponseEntity<List<CustomTable>> getAllTables(
+            @PathVariable Integer restaurantId,
+            @RequestParam String reservationDate,
+            @RequestParam int numberOfGuests) {
+        List<CustomTable> tables = reservationService.getAllTables(restaurantId, reservationDate, numberOfGuests);
+        return ResponseEntity.ok(tables);
     }
 }

@@ -11,5 +11,7 @@ import java.util.List;
 public interface RestaurantTableRepository extends JpaRepository<RestaurantTables, Integer> {
 
     public List<RestaurantTables> findByRestaurantIdAndMaxSeatsGreaterThanEqual(Restaurants restaurantId, Integer maxSeats);
+
+    List<RestaurantTables> findByRestaurantId(Restaurants restaurantId);
 }
 

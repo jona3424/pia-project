@@ -21,10 +21,24 @@ public interface ReservationRepository extends JpaRepository<Reservations, Integ
 
     int countByRestaurantIdAndReservationDateBetween(
             Restaurants restaurant, Date startDate, Date endDate);
-    List<Reservations> findByRestaurantIdAndTableIdAndReservationDateBetween(
-            Restaurants restaurant, RestaurantTables table, Date startDate, Date endDate);
-
     List<Reservations> findActiveReservationsWithUsers(Users userId);
     List<Reservations> findInactiveReservationsWithUsers(Users userId);
+
+    @Query("SELECT r FROM Reservations r WHERE r.status = :status AND r.restaurantId.restaurantId = :restaurantId ORDER BY r.reservationDate ASC")
+    List<Reservations> findByStatusAndRestaurantId(@Param("status") String status, @Param("restaurantId") int restaurantId);
+
+    @Query("SELECT COUNT(r) FROM Reservations r WHERE r.restaurantId = :restaurant AND r.reservationDate BETWEEN :startDate AND :endDate AND r.status NOT IN :ignoredStatuses")
+    int countByRestaurantIdAndReservationDateBetweenAndStatusNotIn(@Param("restaurant") Restaurants restaurant,
+                                                                   @Param("startDate") Date startDate,
+                                                                   @Param("endDate") Date endDate,
+                                                                   @Param("ignoredStatuses") List<String> ignoredStatuses);
+
+    @Query("SELECT r.tableId.tableId FROM Reservations r WHERE r.restaurantId = :restaurant AND r.reservationDate BETWEEN :startDate AND :endDate AND r.status NOT IN :ignoredStatuses")
+    List<Integer> findUnavailableTableIds(@Param("restaurant") Restaurants restaurant,
+                                          @Param("startDate") Date startDate,
+                                          @Param("endDate") Date endDate,
+                                          @Param("ignoredStatuses") List<String> ignoredStatuses);
 }
+
+
 

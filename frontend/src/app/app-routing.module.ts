@@ -16,6 +16,8 @@ import { RestaurantInfoComponent } from './components/restaurant-info/restaurant
 import { CartComponent } from './components/cart/cart.component';
 import { ReservationsComponent } from './components/reservations/reservations/reservations.component';
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
+import { WaiterComponent } from './components/waiter/waiter.component';
+import { WaiterReservationsComponent } from './components/waiter-reservations/waiter-reservations.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -43,6 +45,13 @@ const routes: Routes = [
       {path: 'restaurant-info', component:RestaurantInfoComponent}
     ]
     }
+  ]
+  },
+  {path: 'konobar', component: WaiterComponent, children
+  :[  
+    {path: 'update-user', component:UpdateUserComponent},
+    {path:'reservations',component:WaiterReservationsComponent},
+
   ]
   },
   {path: '', component: HomePageUnregistredComponent}

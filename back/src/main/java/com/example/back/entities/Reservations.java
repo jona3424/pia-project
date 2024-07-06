@@ -39,7 +39,7 @@ import jakarta.persistence.TemporalType;
     @NamedQuery(name = "Reservations.findByStatus", query = "SELECT r FROM Reservations r WHERE r.status = :status"),
     @NamedQuery(name = "Reservations.findByCreatedAt", query = "SELECT r FROM Reservations r WHERE r.createdAt = :createdAt"),
     @NamedQuery(name="Reservations.findActiveReservationsWithUsers", query="SELECT r FROM Reservations r WHERE (r.status = 'Active' OR r.status = 'Pending')  AND r.userId = :userId ORDER BY r.reservationDate DESC"),
-    @NamedQuery(name="Reservations.findInactiveReservationsWithUsers", query="SELECT r FROM Reservations r WHERE (r.status = 'Canceled' OR r.status = 'Done')  AND r.userId = :userId ORDER BY r.reservationDate DESC "),
+    @NamedQuery(name="Reservations.findInactiveReservationsWithUsers", query="SELECT r FROM Reservations r WHERE (r.status = 'Canceled' OR r.status = 'Done' OR r.status = 'Rejected' OR r.status='Expired')  AND r.userId = :userId ORDER BY r.reservationDate DESC "),
 
 })
 public class Reservations implements Serializable {
@@ -66,9 +66,18 @@ public class Reservations implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Column(name = "rejection_comment")
+    private String rejectionComment;
+
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne
     private Users userId;
+
+    @JoinColumn(name = "waiter_id", referencedColumnName = "user_id")
+    @ManyToOne
+    private Users waiterId;
+
     @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id")
     @ManyToOne
     private Restaurants restaurantId;
@@ -86,11 +95,29 @@ public class Reservations implements Serializable {
         this.reservationId = reservationId;
     }
 
+    public Reservations(Integer reservationId, Date reservationDate, int numberOfGuests, String specialRequest, String status, Date createdAt, String rejectionComment) {
+        this.reservationId = reservationId;
+        this.reservationDate = reservationDate;
+        this.numberOfGuests = numberOfGuests;
+        this.specialRequest = specialRequest;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.rejectionComment = rejectionComment;
+    }
+
     public Reservations(Integer reservationId, Date reservationDate, int numberOfGuests, Date createdAt) {
         this.reservationId = reservationId;
         this.reservationDate = reservationDate;
         this.numberOfGuests = numberOfGuests;
         this.createdAt = createdAt;
+    }
+
+    public Users getWaiterId() {
+        return waiterId;
+    }
+
+    public void setWaiterId(Users waiterId) {
+        this.waiterId = waiterId;
     }
 
     public Integer getReservationId() {
@@ -147,6 +174,14 @@ public class Reservations implements Serializable {
 
     public void setUserId(Users userId) {
         this.userId = userId;
+    }
+
+    public String getRejectionComment() {
+        return rejectionComment;
+    }
+
+    public void setRejectionComment(String rejectionComment) {
+        this.rejectionComment = rejectionComment;
     }
 
     public Restaurants getRestaurantId() {
