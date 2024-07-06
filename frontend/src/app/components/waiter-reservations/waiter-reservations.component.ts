@@ -18,11 +18,13 @@ export class WaiterReservationsComponent implements OnInit, AfterViewInit {
   restaurantId = JSON.parse(localStorage.getItem('restaurantId') || '{}');
   canvas: any;
   ctx: any;
-
+  waiterReservations: any[] = [];
+  ReturnMsgUpdateStatus="";
   constructor(private reservationService: ReservationsService) {}
 
   ngOnInit(): void {
     this.loadUnprocessedReservations();
+    this.loadWaiterReservations();
   }
 
   ngAfterViewInit(): void {
@@ -34,6 +36,37 @@ export class WaiterReservationsComponent implements OnInit, AfterViewInit {
   async loadUnprocessedReservations() {
     this.unprocessedReservations = await firstValueFrom(this.reservationService.getUnprocessedReservations(this.restaurantId));
   }
+  async loadWaiterReservations() {
+    this.waiterReservations = await firstValueFrom(this.reservationService.getWaiterReservations(this.currentUser.userId));
+    console.log(this.waiterReservations);
+  }
+
+  isReservationStatusChangable(reservation:any):boolean{
+    let datPlus30Minutes = new Date(reservation.reservationDate);
+    datPlus30Minutes.setMinutes(datPlus30Minutes.getMinutes() + 30);
+    const now = new Date();
+    return now > datPlus30Minutes;
+
+  }
+  async updateReservationStatus(reservation:any, status:string){
+    let datPlus30Minutes = new Date(reservation.reservationDate);
+    datPlus30Minutes.setMinutes(datPlus30Minutes.getMinutes() + 30);
+    const now = new Date();
+    if(now < datPlus30Minutes){
+      this.ReturnMsgUpdateStatus="You can only change the status of a reservation 30 minutes after the reservation time";
+      return;
+    }
+    else{
+    let res= await firstValueFrom(this.reservationService.updateReservationStatus(reservation.reservationId, status));
+    this.loadWaiterReservations();
+    this.ReturnMsgUpdateStatus=res;
+
+    setTimeout(() => {
+      this.ReturnMsgUpdateStatus = "";
+    }, 2500);
+    }
+  }
+
 
   async confirmReservation(reservationId: number) {
     const request = {

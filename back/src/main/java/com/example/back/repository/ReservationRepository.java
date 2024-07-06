@@ -38,6 +38,8 @@ public interface ReservationRepository extends JpaRepository<Reservations, Integ
                                           @Param("startDate") Date startDate,
                                           @Param("endDate") Date endDate,
                                           @Param("ignoredStatuses") List<String> ignoredStatuses);
+
+    List<Reservations> findByWaiterIdAndStatus(Users waiterId, String status);
 }
 
 

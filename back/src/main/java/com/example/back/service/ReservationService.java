@@ -242,5 +242,44 @@ public class ReservationService {
             return new CustomTable(table.getTableId(), table.getMaxSeats(), isAvailable, isOverCapacity, isUnavailable);
         }).toList();
     }
+
+    public List<Reservations> getWaiterReservations(Integer waiterId){
+        List<Reservations> active = reservationRepository.findByWaiterIdAndStatus(new Users(waiterId), "Active");
+        List<Reservations> responseList = new ArrayList<>();
+        for(Reservations reservation : active) {
+            Date currentDate = new Date();
+            Date reservationDatePlus3h = new Date(reservation.getReservationDate().getTime() + 3 * 3600000);
+            if (reservationDatePlus3h.before(currentDate)){
+                reservation.setStatus("Expired");
+                reservationRepository.saveAndFlush(reservation);
+            } else {
+                responseList.add(reservation);
+            }
+        }
+        return responseList;
+    }
+
+    public String updateReservationStatus(Integer reservationId, String status) {
+        Reservations reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        Date currentDate = new Date();
+        Date reservationDatePlus3h = new Date(reservation.getReservationDate().getTime() + 3 * 3600000);
+        if (reservationDatePlus3h.before(currentDate)) {
+            reservation.setStatus("Expired");
+            reservationRepository.saveAndFlush(reservation);
+            return "Reservation expired.";
+        }
+        if (Arrays.asList("Active", "Pending", "Rejected", "Expired").contains(status)) {
+            return "Invalid status.";
+        }
+        Date reservationdateplus30min = new Date(reservation.getReservationDate().getTime() + 30 * 60000);
+        if (status.equals("Active") && reservationdateplus30min.before(currentDate)) {
+            return "Reservation status cannot be changed.";
+        }
+
+        reservation.setStatus(status);
+        reservationRepository.saveAndFlush(reservation);
+        return "Reservation status updated.";
+    }
 }
 

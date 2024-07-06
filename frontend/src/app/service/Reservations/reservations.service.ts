@@ -57,4 +57,13 @@ export class ReservationsService {
 
     return this.http.get<any[]>(`http://localhost:8080/reservations/allTables/${restaurantId}`, { params });
   }
+
+  getWaiterReservations(waiterId: number) {
+    return this.http.get<any[]>(`http://localhost:8080/reservations/waiterReservations/${waiterId}`);
+  }
+
+  updateReservationStatus(reservationId: number, status: string) {
+    return this.http.post<string>(`http://localhost:8080/reservations/reservations/${reservationId}/${status}`,null,{responseType: 'text' as 'json'});
+  }
+
 }

@@ -48,4 +48,35 @@
     <h1>Canvas Table Selector</h1>
     <canvas id="tableCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
   </div>
+
+  <div class="mt-5">
+    <h2>Confirmed Reservations</h2>
+    <div class="table-responsive">
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th>Reservation Date</th>
+            <th>Restaurant</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of waiterReservations">
+            <td>{{ reservation.reservationDate | date: 'short' }}</td>
+            <td>{{ reservation.restaurantId.name }}</td>
+            <td>{{ reservation.status }}</td>
+            <td>
+              <div *ngIf="reservation.status === 'Active'">
+                <button *ngIf="isReservationStatusChangable(reservation)" (click)="updateReservationStatus(reservation, 'Done')" class="btn btn-success">Confirm Arrival</button>
+                <button *ngIf="isReservationStatusChangable(reservation)" (click)="updateReservationStatus(reservation, 'Canceled')" class="btn btn-danger">Didn't Show</button>
+                <div *ngIf="ReturnMsgUpdateStatus" class="alert alert-warning">{{ReturnMsgUpdateStatus}}</div>
+                <div *ngIf="!isReservationStatusChangable(reservation)" class="alert alert-warning">Cannot confirm yet</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

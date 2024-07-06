@@ -105,4 +105,17 @@ public class ReservationController {
         List<CustomTable> tables = reservationService.getAllTables(restaurantId, reservationDate, numberOfGuests);
         return ResponseEntity.ok(tables);
     }
+
+
+    @GetMapping("/waiterReservations/{waiterId}")
+    public ResponseEntity<List<Reservations>> getWaiterReservations(@PathVariable Integer waiterId) {
+        List<Reservations> reservations = reservationService.getWaiterReservations(waiterId);
+        return ResponseEntity.ok(reservations);
+    }
+
+    @PostMapping("/reservations/{reservationId}/{status}")
+    public ResponseEntity<?> updateReservationStatus(@PathVariable Integer reservationId, @PathVariable String status) {
+        String s = reservationService.updateReservationStatus(reservationId, status);
+        return ResponseEntity.ok().body(s);
+    }
 }
