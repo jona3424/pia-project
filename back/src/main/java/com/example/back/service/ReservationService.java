@@ -1,7 +1,6 @@
 package com.example.back.service;
 
-import com.example.back.dto.CustomTable;
-import com.example.back.dto.ReservationDto;
+import com.example.back.dto.*;
 import com.example.back.entities.Reservations;
 import com.example.back.entities.RestaurantTables;
 import com.example.back.entities.Restaurants;
@@ -96,7 +95,7 @@ public class ReservationService {
         List<RestaurantTables> availableTables = restaurantTablesRepository.findByRestaurantIdAndMaxSeatsGreaterThanEqual(
                 restaurant, reservationDto.getNumberOfPeople());
         if (availableTables.isEmpty()) {
-            return "No available tables for the selected date.";
+            return "No available tables for that number of guests.";
         }
 
         LocalDateTime localDateTime = LocalDateTime.of(reservationDto.getDate(), reservationDto.getTime());
@@ -280,6 +279,18 @@ public class ReservationService {
         reservation.setStatus(status);
         reservationRepository.saveAndFlush(reservation);
         return "Reservation status updated.";
+    }
+
+    public List<WeiterDay> reservationService(Integer waiterId){
+       return  reservationRepository.findGuestsPerDayByWaiter(waiterId);
+    }
+
+    public List<WorkerGuests> findTotalGuestsPerWaiterInRestaurant(int restaurantId){
+        return reservationRepository.findTotalGuestsPerWaiterInRestaurant(restaurantId);
+    }
+
+    public List<AverageReservationsPerDayDTO> findAverageReservationsPerDay(int restaurantId){
+        return reservationRepository.findAverageReservationsPerDay(restaurantId);
     }
 }
 

@@ -67,6 +67,7 @@ export class UserService {
     return this.http.post<User>(`http://localhost:8080/users/update/${id}`,user)
   }
   createWaiter(data: any){
+    console.log(data)
     return this.http.post<User>("http://localhost:8080/users/create-waiter", data)
   }
 }

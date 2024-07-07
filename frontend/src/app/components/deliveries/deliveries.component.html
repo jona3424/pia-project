@@ -29,14 +29,14 @@
           <tr>
             <th>Acceptance Date</th>
             <th>Restaurant Name</th>
-            <th>Order Status</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let delivery of archivedDeliveries">
             <td>{{ delivery.acceptedAt | date: 'short' }}</td>
             <td>{{ delivery.restaurantId.name }}</td>
-            <td>{{ delivery.status }}</td>
+            <td>{{ delivery.totalAmount }} $</td>
           </tr>
         </tbody>
       </table>

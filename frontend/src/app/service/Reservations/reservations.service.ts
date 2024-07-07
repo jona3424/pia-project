@@ -65,5 +65,15 @@ export class ReservationsService {
   updateReservationStatus(reservationId: number, status: string) {
     return this.http.post<string>(`http://localhost:8080/reservations/reservations/${reservationId}/${status}`,null,{responseType: 'text' as 'json'});
   }
+  getWaiterStatisticsPerDay(waiterId: number){
+    return this.http.get<any[]>(`http://localhost:8080/reservations/get-waiter-statistics-per-days/${waiterId}`);
+  }
 
+  getTotalGuestsPerWaiterInRestaurant(restaurantId: number){
+    return this.http.get<any[]>(`http://localhost:8080/reservations/get-total-guests-per-waiter-in-restaurant/${restaurantId}`);
+  }
+
+  getAverageReservationsPerDay(restaurantId: number){
+    return this.http.get<any[]>(`http://localhost:8080/reservations/average-reservations-per-day/${restaurantId}`);
+  }
 }

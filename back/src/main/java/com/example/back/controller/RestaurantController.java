@@ -5,7 +5,9 @@ import com.example.back.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +19,13 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping
-    public List<Restaurants> getAllRestaurants() {
-        return restaurantService.findAll();
+    public ResponseEntity<?> getAllRestaurants() {
+        return ResponseEntity.ok(restaurantService.findAll());
+    }
+    @PostMapping
+    public ResponseEntity<?> addRestaurant(@RequestBody Restaurants restaurant) throws IOException {
+        Restaurants savedRestaurant = restaurantService.save(restaurant);
+        return ResponseEntity.ok(savedRestaurant);
     }
 
     @GetMapping("/{id}")
@@ -26,13 +33,7 @@ public class RestaurantController {
         Optional<Restaurants> Restaurants = restaurantService.findById(id);
         return Restaurants.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    @PostMapping
-    public Restaurants createRestaurant(@RequestBody Restaurants Restaurants) {
-        return restaurantService.save(Restaurants);
-    }
-
-    @PutMapping("/{id}")
+    @PostMapping("/update-restaurant/{id}")
     public ResponseEntity<Restaurants> updateRestaurant(@PathVariable Integer id, @RequestBody Restaurants restaurantDetails) {
         Optional<Restaurants> Restaurants = restaurantService.findById(id);
         if (Restaurants.isPresent()) {
@@ -44,7 +45,9 @@ public class RestaurantController {
             updatedRestaurant.setContactPerson(restaurantDetails.getContactPerson());
             updatedRestaurant.setPhoneNumber(restaurantDetails.getPhoneNumber());
             updatedRestaurant.setEmail(restaurantDetails.getEmail());
-            return ResponseEntity.ok(restaurantService.save(updatedRestaurant));
+            updatedRestaurant.setOpeningTime(restaurantDetails.getOpeningTime());
+            updatedRestaurant.setClosingTime(restaurantDetails.getClosingTime());
+            return ResponseEntity.ok(restaurantService.update(updatedRestaurant));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -81,5 +84,7 @@ public class RestaurantController {
     public ResponseEntity<?> getRestaurantForWorker(@PathVariable Integer workerId) {
         return ResponseEntity.ok().body(restaurantService.getRestaurantForWorker(workerId));
     }
+
+
 }
 

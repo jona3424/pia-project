@@ -29,6 +29,7 @@ import { NgxKonvaModule } from 'ngx-konva';
 import { NgChartsModule } from 'ng2-charts';
 import { DeliveryComponent } from './components/delivery/delivery.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     WaiterReservationsComponent,
     DeliveryComponent,
     LineChartComponent,
+    StatisticsComponent,
   ],
   imports: [
       BrowserModule,

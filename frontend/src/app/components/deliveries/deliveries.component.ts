@@ -37,7 +37,7 @@ export class DeliveriesComponent implements OnInit {
         return '20-30 minutes';
       case 40:
         return '30-40 minutes';
-      case 60:
+      case 50:
         return '50-60 minutes';
       default:
         return 'N/A';

@@ -1,5 +1,6 @@
 package com.example.back.controller;
 
+import com.example.back.dto.AcceptOrderDto;
 import com.example.back.dto.OrderDto;
 import com.example.back.entities.Orders;
 import com.example.back.entities.Restaurants;
@@ -87,8 +88,8 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getAllOrders(restaurantId));
     }
     @PostMapping("/accept-order/{orderId}")
-    public ResponseEntity<?> acceptOrder(@PathVariable Integer orderId, @RequestBody Date estimatedTime) {
-        return ResponseEntity.ok(orderService.updateOrderStatus(orderId, "Confirmed", estimatedTime));
+    public ResponseEntity<?> acceptOrder(@PathVariable Integer orderId, @RequestBody AcceptOrderDto acceptOrderDto) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(orderId,  acceptOrderDto.getStatus(),acceptOrderDto.getEstimatedTime()));
     }
 }
 

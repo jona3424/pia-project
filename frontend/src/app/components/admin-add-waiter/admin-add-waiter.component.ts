@@ -25,6 +25,8 @@ export class AdminAddWaiterComponent {
     email: '',
     profilePicture: null,
     creditCard: '',
+    type: '',
+    role: '',
   };
   restaurantId: number = 0;
   waiters: Array<User> = [];
@@ -70,19 +72,20 @@ export class AdminAddWaiterComponent {
 
           const reader = new FileReader();
           reader.onload = () => {
-            this.waiter.profilePicture = (reader.result as string).split(',')[1]; // Remove the base64 prefix
+            this.waiter.profilePictureBase64 = (reader.result as string).split(',')[1]; // Remove the base64 prefix
           };
           reader.readAsDataURL(file);
         }
       };
     } else {
       this.profilePictureInvalid = false;
-      this.waiter.profilePicture = null; // Ensure profilePicture is null if no file is selected
+      this.waiter.profilePictureBase64 = null; // Ensure profilePicture is null if no file is selected
     }
   }
 
   async onSubmit() {
-    this.waiter.type = 'waiter';
+    this.waiter.type = 'konobar';
+    this.waiter.role = 'konobar';
     let res = await firstValueFrom(this.userService.createWaiter(this.waiter));
     if (res != null) {
       let res1=await firstValueFrom(this.restaurantService.assingWorkerToRestaurant(res.userId, this.restaurantId));

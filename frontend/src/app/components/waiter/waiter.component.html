@@ -12,6 +12,7 @@
         <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'update-user'}" (click)="selectComponent1('update-user',currentUser.userId)">Update user info</button>
         <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'reservations'}" (click)="selectComponent1('reservations',currentUser.userId)">Reservations</button>
         <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'deliveries'}" (click)="selectComponent1('deliveries',currentUser.userId)">Food delivery</button>
+        <button  class="btn btn-outline-primary me-2" [ngClass]="{'active': activeButton === 'statistics'}" (click)="selectComponent1('statistics',currentUser.userId)">Statistics</button>
       </nav>
     </div>
     <h3 class="headerComponentName" >Waiter component</h3>

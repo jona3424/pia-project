@@ -1,64 +1,52 @@
-import { ChartDataset, ChartOptions } from 'chart.js';
-import { Component, OnInit } from '@angular/core';
+import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import { Component, OnInit, Input } from '@angular/core';
+
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css']
 })
 export class LineChartComponent implements OnInit {
-  chartData: ChartDataset[] = [
-    {
-      label: '$ in millions',
-      data: [1551, 1688, 1800, 1895, 2124, 2124],
-      barPercentage:1.3,
-      pointHitRadius: 15, // expands the hover 'detection' area
-      pointHoverRadius: 8, // grows the point when hovered
-
-      pointRadius: 2,
-      borderColor: '#2D2F33', // main line color aka $midnight-medium from @riapacheco/yutes/seasonal.scss
-      pointBackgroundColor: '#2D2F33',
-      pointHoverBackgroundColor: '#2D2F33',
-      borderWidth: 2, // main line width
-      hoverBorderWidth: 0, // borders on points
-      pointBorderWidth: 0, // removes POINT borders
-      tension: 0.3, // makes line more squiggly
-    }
-  ];
-  chartLabels: string[] = [ '2016 Revenue', '2017 Revenue', '2018 Revenue', '2019 Revenue', '2020 Revenue', '2021 Revenue' ];
+  @Input() chartData: ChartDataset[] = [];
+  @Input() chartLabels: string[] = [];
+  @Input() label: string = '';
+  @Input() chartType: ChartType = 'line';
+  
   chartOptions: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-
     scales: {
-      xAxis: {
-        display: false,
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: ''
+        },
         grid: {
           drawBorder: false
         }
       },
-      yAxis: {
-        display: false
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text:''
+        }
       }
     },
-
     plugins: {
       legend: {
-        display: false
+        display: true,
+        position: 'top'
       },
-
       tooltip: {
-        // ⤵️ tooltip main styles
         backgroundColor: 'white',
-        displayColors: false, // removes unnecessary legend
+        displayColors: false,
         padding: 10,
-
-        // ⤵️ title
         titleColor: '#2D2F33',
         titleFont: {
           size: 18
         },
-
-        // ⤵️ body
         bodyColor: '#2D2F33',
         bodyFont: {
           size: 13
@@ -66,9 +54,12 @@ export class LineChartComponent implements OnInit {
       }
     }
   };
+
   constructor() { }
 
   ngOnInit(): void {
+    if (this.chartData.length > 0) {
+      this.chartData[0].label = this.label;
+    }
   }
-
 }

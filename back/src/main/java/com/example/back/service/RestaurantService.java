@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +35,12 @@ public class RestaurantService {
     }
 
     public Restaurants save(Restaurants restaurant) {
+        restaurant.setCreatedAt(new Date());
         return restaurantRepository.save(restaurant);
     }
-
+    public Restaurants update(Restaurants restaurant) {
+        return restaurantRepository.save(restaurant);
+    }
     public void deleteById(Integer id) {
         restaurantRepository.deleteById(id);
     }

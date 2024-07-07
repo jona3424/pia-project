@@ -35,4 +35,18 @@ export class RestaurantService {
   getRestaurantByWorkerId(workerId: number){
     return this.http.get<any>(`http://localhost:8080/restaurants/restaurant-for-worker/${workerId}`)
   }
+
+  addRestaurant(restaurant: any){
+    return this.http.post<Restaurant>('http://localhost:8080/restaurants',restaurant)
+  }
+
+  updateRestaurant(restaurantId: number, restaurant: any) {
+    console.log(restaurant);
+    console.log(restaurantId);
+    return this.http.post<any>(`http://localhost:8080/restaurants/update-restaurant/${restaurantId}`, restaurant);
+  }
+
+  addTable(tableData: any) {
+    return this.http.post<any>('http://localhost:8080/restaurant-tables', tableData);
+  }
 }

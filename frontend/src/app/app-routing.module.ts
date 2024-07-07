@@ -20,6 +20,7 @@ import { WaiterComponent } from './components/waiter/waiter.component';
 import { WaiterReservationsComponent } from './components/waiter-reservations/waiter-reservations.component';
 import { DeliveryComponent } from './components/delivery/delivery.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -56,6 +57,8 @@ const routes: Routes = [
     {path: 'update-user', component:UpdateUserComponent},
     {path:'reservations',component:WaiterReservationsComponent},
     {path:'deliveries',component:DeliveryComponent},
+    {path:'statistics',component:StatisticsComponent},
+
   ]
   },
   {path: '', component: HomePageUnregistredComponent}

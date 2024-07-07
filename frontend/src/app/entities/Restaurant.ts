@@ -11,6 +11,9 @@ export class Restaurant{
         createdAt: string='';
         latitude: number=0;
         longitude: number=0;
+        openingTime: string='';
+        closingTime: string='';
+        layoutJson: string='';
         reservationsList: any[]=[];
         reviewsList: any[]=[];
         menuItemsList: any[]=[];

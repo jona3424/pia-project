@@ -81,6 +81,10 @@ export class WaiterReservationsComponent implements OnInit, AfterViewInit {
   }
 
   async rejectReservation(reservationId: number) {
+    if(this.comment == ''){
+      alert("Please enter a comment before rejecting the reservation");
+      return;
+    }
     const request = {
       reservationId: reservationId,
       comment: this.comment

@@ -70,7 +70,7 @@ public class UserService {
             profilePictureBytes = getDefaultProfilePicture();
         }
         user.setProfilePicture(profilePictureBytes);
-
+        System.out.println(user.getRole());
         return userRepository.saveAndFlush(user);
     }
 

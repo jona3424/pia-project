@@ -32,6 +32,7 @@ public class MenuItemService {
     }
 
     public List<MenuItems> findByRestaurantId(Integer restaurantId) {
+        System.out.println("restaurantId: " + restaurantId);
         return menuItemRepository.findByRestaurantId(new Restaurants(restaurantId));
     }
 }

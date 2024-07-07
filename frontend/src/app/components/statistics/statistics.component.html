@@ -1,0 +1,20 @@
+<h2>Number of guests per days for {{currentUser.username}}</h2>
+<app-line-chart *ngIf="data1.length && chartlabels1.length"
+                [chartData]="[{ data: data1, label: label1, barPercentage: 0.8, backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 }]"
+                [chartLabels]="chartlabels1"
+                [chartType]="chartType1">
+</app-line-chart>
+
+<h2>Number of guests per worker</h2>
+<app-line-chart *ngIf="data2.length && chartlabels2.length"
+                [chartData]="[{ data: data2, label: label2, backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 }]"
+                [chartLabels]="chartlabels2"
+                [chartType]="chartType2">
+</app-line-chart>
+
+<h2>Average Reservations Per Day</h2>
+<app-line-chart *ngIf="data3.length && chartlabels3.length"
+                [chartData]="[{ data: data3, label: label3, barPercentage: 1.3, backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 }]"
+                [chartLabels]="chartlabels3"
+                [chartType]="chartType3">
+</app-line-chart>

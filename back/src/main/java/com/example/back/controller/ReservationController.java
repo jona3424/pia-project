@@ -118,4 +118,20 @@ public class ReservationController {
         String s = reservationService.updateReservationStatus(reservationId, status);
         return ResponseEntity.ok().body(s);
     }
+
+    @GetMapping("/get-waiter-statistics-per-days/{waiterId}")
+    public ResponseEntity<?> getWaiterStatisticsPerDay(@PathVariable Integer waiterId) {
+        return ResponseEntity.ok().body(reservationService.reservationService(waiterId));
+
+    }
+
+    @GetMapping("/get-total-guests-per-waiter-in-restaurant/{restaurantId}")
+    public ResponseEntity<?> getTotalGuestsPerWaiterInRestaurant(@PathVariable Integer restaurantId) {
+        return ResponseEntity.ok().body(reservationService.findTotalGuestsPerWaiterInRestaurant(restaurantId));
+    }
+
+    @GetMapping("/average-reservations-per-day/{restaurantId}")
+    public ResponseEntity<?> findAverageReservationsPerDay(@PathVariable Integer restaurantId) {
+        return ResponseEntity.ok().body(reservationService.findAverageReservationsPerDay(restaurantId));
+    }
 }

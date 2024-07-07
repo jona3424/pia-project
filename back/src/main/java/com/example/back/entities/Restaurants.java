@@ -83,6 +83,10 @@ public class Restaurants implements Serializable {
 
     @Column(name = "closing_time")
     private LocalTime closingTime;
+
+    @Column(name = "layout_json", columnDefinition = "TEXT")
+    private String layoutJson;
+
     @OneToMany(mappedBy = "restaurantId")
     @JsonIgnore
     private List<Reservations> reservationsList;
@@ -107,7 +111,7 @@ public class Restaurants implements Serializable {
         this.restaurantId = restaurantId;
     }
 
-    public Restaurants(Integer restaurantId, String name, String type, String address, String contactPerson, String phoneNumber, Date createdAt, Double latitude, Double longitude, LocalTime openingTime, LocalTime closingTime) {
+    public Restaurants(Integer restaurantId, String name, String type, String address, String contactPerson, String phoneNumber, Date createdAt, Double latitude, Double longitude, LocalTime openingTime, LocalTime closingTime, String layoutJson) {
         this.restaurantId = restaurantId;
         this.name = name;
         this.type = type;
@@ -119,6 +123,15 @@ public class Restaurants implements Serializable {
         this.longitude = longitude;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
+        this.layoutJson = layoutJson;
+    }
+
+    public String getLayoutJson() {
+        return layoutJson;
+    }
+
+    public void setLayoutJson(String layoutJson) {
+        this.layoutJson = layoutJson;
     }
 
     public Integer getRestaurantId() {

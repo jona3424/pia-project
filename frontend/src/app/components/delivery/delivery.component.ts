@@ -12,8 +12,9 @@ export class DeliveryComponent implements OnInit {
   orders: any[] = [];
   estimatedTimeOptions = ['20-30 minutes', '30-40 minutes', '50-60 minutes'];
   selectedOrderId: number | null = null;
-  selectedEstimatedTime: string | null = null;
-
+  selectedEstimatedTime: string  = '20-30 minutes';
+  currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  restaurantId = JSON.parse(localStorage.getItem('restaurantId') || '{}');
   constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
@@ -21,17 +22,23 @@ export class DeliveryComponent implements OnInit {
   }
 
   async loadOrders() {
-    // this.orders = await firstValueFrom(this.orderService.getAllOrders());
+    this.orders = await firstValueFrom(this.orderService.getOrdersForRestaurant(this.restaurantId.restaurantId));
+    console.log(this.orders);
   }
 
   async updateOrderStatus(orderId: number, status: string) {
-    const estimatedTime = status === 'Confirmed' ? this.selectedEstimatedTime : null;
-    // await firstValueFrom(this.orderService.updateOrderStatus(orderId, status, estimatedTime));
+    const estimatedTime = status === 'Confirmed' ? this.selectedEstimatedTime : '20-30 minutes';
+    await firstValueFrom(this.orderService.changeOrderStatus(orderId, status, estimatedTime));
     this.loadOrders();
+    this.selectOrder(orderId);
   }
 
   selectOrder(orderId: number) {
+    if (this.selectedOrderId === orderId) {
+      this.selectedOrderId = null;
+    }else { 
     this.selectedOrderId = orderId;
+    }
   }
 
   setEstimatedTime(time: string) {
