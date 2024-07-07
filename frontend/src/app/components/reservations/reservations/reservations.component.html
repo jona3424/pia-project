@@ -10,6 +10,7 @@
             <th>Restaurant Name</th>
             <th>Restaurant Address</th>
             <th>Reservation status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +19,9 @@
             <td>{{ reservation.restaurantId.name }}</td>
             <td>{{ reservation.restaurantId.address }}</td>
             <td>{{ reservation.status }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="cancelReservation(reservation)">Cancel</button>
+            </td>
           </tr>
         </tbody>
       </table>

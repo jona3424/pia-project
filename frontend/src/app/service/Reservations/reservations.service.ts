@@ -76,4 +76,8 @@ export class ReservationsService {
   getAverageReservationsPerDay(restaurantId: number){
     return this.http.get<any[]>(`http://localhost:8080/reservations/average-reservations-per-day/${restaurantId}`);
   }
+
+  cancelReservation(reservationId: number) {
+    return this.http.post<string>(`http://localhost:8080/reservations/cancel-reservation/${reservationId}`,null,{responseType: 'text' as 'json'});
+  }
 }

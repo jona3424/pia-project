@@ -61,14 +61,14 @@ export class RegisterComponent {
 
           const reader = new FileReader();
           reader.onload = () => {
-            this.user.profilePicture = (reader.result as string).split(',')[1]; // Remove the base64 prefix
+            this.user.profilePictureBase64 = (reader.result as string).split(',')[1]; // Remove the base64 prefix
           };
           reader.readAsDataURL(file);
         }
       };
     } else {
       this.profilePictureInvalid = false;
-      this.user.profilePicture = null; // Ensure profilePicture is null if no file is selected
+      this.user.profilePictureBase64 = null; // Ensure profilePicture is null if no file is selected
     }
   }
 

@@ -134,4 +134,10 @@ public class ReservationController {
     public ResponseEntity<?> findAverageReservationsPerDay(@PathVariable Integer restaurantId) {
         return ResponseEntity.ok().body(reservationService.findAverageReservationsPerDay(restaurantId));
     }
+
+    @PostMapping("/cancel-reservation/{reservationId}")
+    public ResponseEntity<?> cancelReservation(@PathVariable Integer reservationId) {
+        String s = reservationService.cancelReservation(reservationId);
+        return ResponseEntity.ok().body(s);
+    }
 }

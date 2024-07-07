@@ -292,5 +292,19 @@ public class ReservationService {
     public List<AverageReservationsPerDayDTO> findAverageReservationsPerDay(int restaurantId){
         return reservationRepository.findAverageReservationsPerDay(restaurantId);
     }
+    public String cancelReservation(Integer reservationId) {
+        Reservations reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        Date currentDate = new Date();
+        Date reservationDatePlus3h = new Date(reservation.getReservationDate().getTime() + 3 * 3600000);
+        if (reservationDatePlus3h.before(currentDate)) {
+            reservation.setStatus("Expired");
+            reservationRepository.saveAndFlush(reservation);
+            return "Reservation expired.";
+        }
+        reservation.setStatus("Canceled");
+        reservationRepository.saveAndFlush(reservation);
+        return "Reservation canceled.";
+    }
 }
 

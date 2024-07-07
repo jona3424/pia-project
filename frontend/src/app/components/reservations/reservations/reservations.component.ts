@@ -24,6 +24,18 @@ export class ReservationsComponent implements OnInit {
   async loadCurrentReservations() {
     this.currentReservations=await firstValueFrom(this.reservationService.getActiveReservations(this.userId));
   }
+  async cancelReservation(reservation: any) {
+    let date = new Date(reservation.reservationDate);
+    let currentDate = new Date();
+    if (Math.abs(currentDate.getTime() - date.getTime()) < 45 * 60 * 1000) {
+      alert("Reservation cannot be canceled. Time difference is less than 45 minutes.");
+    } else {
+      await firstValueFrom(this.reservationService.cancelReservation(reservation.reservationId));
+      this.loadCurrentReservations();
+      this.loadArchivedReservations();
+    }
+  }
+
 
   async loadArchivedReservations() {
     this.archivedReservations=await firstValueFrom(this.reservationService.getInactiveReservations(this.userId));
